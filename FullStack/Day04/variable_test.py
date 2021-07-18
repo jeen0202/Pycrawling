@@ -4,8 +4,8 @@ app = Flask(__name__)
 
 @app.route('/hello/<user>')
 def hello_name(user):
-    return render_template('variable.html', name1=user, name2=2)
+    return render_template('variable.html', name=user)
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port="8080")
+    app.run(host="localhost", port="8085")
