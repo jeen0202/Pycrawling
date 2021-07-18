@@ -7,4 +7,4 @@ def hello_html():
     return render_template('condition.html', data=value)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="8080")
+    app.run(host="localhost", port="8085")
