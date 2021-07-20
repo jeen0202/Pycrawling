@@ -11,6 +11,8 @@ firebase_admin.initialize_app(cred, {
 db = firestore.client()
 
 doc_ref = db.collection(u'users').document(u'test')
+users_ref = db.collection(u'users')
+batch= db.batch()
 ## Create
 # doc_ref.set({
 #     u'first': u'Sejin',
@@ -20,9 +22,13 @@ doc_ref = db.collection(u'users').document(u'test')
 ##
 
 ##Read
-# users_ref = db.collection(u'users')
 # docs = users_ref.stream()
 
 # for doc in docs:
 #     print(f'{doc.id} => {doc.to_dict()}')
-##
+
+##Update
+batch.update(doc_ref,{u'last' : 'Kim',u'first' :'Jieun'})
+
+##delete
+#db.collection(u'users').document(u'test').delete()
