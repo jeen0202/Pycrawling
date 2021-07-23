@@ -1,7 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-
 # Use the application default credentials
 cred = credentials.ApplicationDefault()
 firebase_admin.initialize_app(cred, {
@@ -32,7 +31,7 @@ batch.update(doc_ref,{u'last' : 'Kim',u'first' :'Jieun'})
 ##delete
 #db.collection(u'users').document(u'test').delete()
 
-class User():
+class User(UserMixin):
 
   def __init__(self,user_id,user_email,blog_id):
     self.id = user_id
@@ -47,7 +46,13 @@ class User():
     docs = users_ref.stream()
     for doc in docs:
       if doc.id == user_id :
-            return doc
+            user = doc
+            break
+    if not user:
+      return None
+    
+    print(user)
+    user = User(user_id=user[0],user_email=user[1], blog_id=user[2])
 
   @staticmethod
   def create(user_email, blog_id):
@@ -60,6 +65,7 @@ class User():
       return User.find(user_email)
     else :
       return user
+
   @staticmethod
   def find(user_email):
     user = users_ref.where('user_email','==',user_email)
