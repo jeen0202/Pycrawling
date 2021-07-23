@@ -32,7 +32,7 @@ batch.update(doc_ref,{u'last' : 'Kim',u'first' :'Jieun'})
 ##delete
 #db.collection(u'users').document(u'test').delete()
 
-class User(UserMixin):
+class User():
 
   def __init__(self,user_id,user_email,blog_id):
     self.id = user_id
@@ -41,9 +41,31 @@ class User(UserMixin):
 
   def get_id(self):
     return str(self.id)
+
   @staticmethod
   def get(user_id):
     docs = users_ref.stream()
     for doc in docs:
-      if doc.user_id == user_id :
+      if doc.id == user_id :
             return doc
+
+  @staticmethod
+  def create(user_email, blog_id):
+    user = User.find(user_email)
+    if user == None :
+      users_ref.add(
+        user_email = user_email,
+        blog_id = blog_id
+      )
+      return User.find(user_email)
+    else :
+      return user
+  @staticmethod
+  def find(user_email):
+    user = users_ref.where('user_email','==',user_email)
+    if not user:
+      return None
+    
+    print(user)
+    user = User(user_id=user[0], user_email=user[1],blog_id=user[2])
+    return user
