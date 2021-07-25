@@ -9,9 +9,14 @@ import os
 # https만을 지원하는 기능을 http에서 test하기 위한 설정
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
+from blog_view import blog
+
 app = Flask(__name__, static_url_path='/static')
 CORS(app)
 app.secure_key = 'sejing_server'
+
+#blueprint 등록
+app.register_blueprint(blog.blog_abtest, url_prefix='/blog')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
