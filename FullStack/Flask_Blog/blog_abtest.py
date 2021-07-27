@@ -10,10 +10,11 @@ import os
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 from blog_view import blog
+from blog_control.user_mgmt import User
 
 app = Flask(__name__, static_url_path='/static')
 CORS(app)
-app.secure_key = 'sejing_server'
+app.secret_key = 'sejing_server1'
 
 #blueprint 등록
 app.register_blueprint(blog.blog_abtest, url_prefix='/blog')

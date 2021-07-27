@@ -56,6 +56,9 @@
   <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
     <div class="col-md-6 px-0">
       <h1 class="display-4 ">내가 풀스택을 익히는 이유</h1>
+      {% if user_email != null%}
+      {{ user_email}} 이메일 주소로 구동 중입니다.
+      {%else%}
       <form action='/blog/set_email' method="post">
         <div class="row g-3 align-items-center">
           <div class="col-auto">
@@ -67,6 +70,7 @@
           </div>
         </div>
       </form>
+      {% endif %}
     </div>
   </div>
 
