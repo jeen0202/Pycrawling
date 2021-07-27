@@ -13,6 +13,7 @@ def set_email():
         print(request.headers)
         print('set_email', request.form['user_email'])
         user = User.create(request.form['user_email'],'A')
+        #print(user)
         login_user(user)
         # content tyhpe 이 application/json 일경우 get_json()
     return redirect('/blog/test')
@@ -20,6 +21,7 @@ def set_email():
 @blog_abtest.route('/test')
 def test():
     if current_user.is_authenticated:
+        print(f"Current User : {current_user.user_email}")
         return render_template('blog_A.html',user_email=current_user.user_email)
     else:
         return render_template('blog_A.html')
