@@ -10,10 +10,11 @@ firebase_admin.initialize_app(cred, {
 db = firestore.client()
 
 def conn_Firestore():
-  cred = credentials.ApplicationDefault()
-  firebase_admin.initialize_app(cred, {
-    'projectId': "flask-blog-574c4",
-  })
+  if not firebase_admin.get_app():
+    cred = credentials.ApplicationDefault()
+    firebase_admin.initialize_app(cred, {
+      'projectId': "flask-blog-574c4",
+    })
   db = firestore.client()
   return db
 

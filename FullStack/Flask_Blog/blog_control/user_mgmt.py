@@ -14,7 +14,7 @@ class User(UserMixin):
     @staticmethod
     def get(user_id):
         db = conn_Firestore()
-        query = db.collection(u'user_info').where(u'user_id' ,u'==', user_id)
+        query = db.collection(u'user_info').where(u'user_id' ,u'==', user_id).get()
         #print(query)
         if not query:
             return None
@@ -24,8 +24,8 @@ class User(UserMixin):
     @staticmethod
     def find(user_email):
         db = conn_Firestore()
-        query = db.collection(u'user_info').where(u'user_email' ,u'==', user_email)
-        #print(query)
+        query = db.collection(u'user_info').where(u'user_email' ,u'==', user_email).get()
+        print(f"QUERY :{query}")
         if not query:
             return None
         user= User(user_id = query.user_id, user_email = query.user_email, blog_id= query.blod_id)

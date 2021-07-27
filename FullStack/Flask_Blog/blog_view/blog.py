@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, request, render_template,jsonify,make_response,redirect,url_for
-from flask.helpers import make_response
+from flask_login import login_user, current_user
+from blog_control.user_mgmt import User
 
 blog_abtest = Blueprint('blog', __name__)
 
@@ -11,9 +12,14 @@ def set_email():
     else:
         print(request.headers)
         print('set_email', request.form['user_email'])
+        user = User.create(request.form['user_email'],'A')
+        login_user(user)
         # content tyhpe 이 application/json 일경우 get_json()
     return redirect('/blog/test')
 
 @blog_abtest.route('/test')
 def test():
-    return render_template('blog_A.html')
+    if current_user.is_authenticated:
+        return render_template('blog_A.html',user_email=current_user.user_email)
+    else:
+        return render_template('blog_A.html')
