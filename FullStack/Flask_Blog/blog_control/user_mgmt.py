@@ -14,11 +14,9 @@ class User(UserMixin):
     @staticmethod
     def get(user_id):
         db = conn_Firestore()
-        query = db.collection(u'user_info').where(u'user_id' ,u'==', user_id).get()
-        result = None        
-        for doc in query:
-            id = doc.id
-            result= doc.to_dict()
+        query = db.collection(u'user_info').document(user_id).get()        
+        id = query.id
+        result= query.to_dict()
         print(result)
         if not result:
             return None
@@ -32,12 +30,12 @@ class User(UserMixin):
         result = None
         for doc in query:
             id = doc.id
-            result= doc.to_dict()
-        #print(not result)
+            result= doc.to_dict()        
         if not result :
             return None
-        user= User( user_id = id,user_email = result[u'user_email'], blog_id= result[u'blog_id'])
-        return user
+        else :            
+            user= User( user_id = id,user_email = result[u'user_email'], blog_id= result[u'blog_id'])                       
+            return user
     
     @staticmethod
     def create(user_email, blog_id):
