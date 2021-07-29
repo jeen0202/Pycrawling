@@ -19,6 +19,7 @@ def set_email():
         return redirect(url_for('blog.test'))
 @blog_abtest.route('logout')
 def logout():
+    User.delete(current_user.id)
     logout_user()
     return redirect(url_for('blog.test'))
 

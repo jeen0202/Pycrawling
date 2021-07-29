@@ -47,6 +47,13 @@ class User(UserMixin):
             return User.find(user_email)
         else :
             return user
+    
+    @staticmethod
+    def delete(user_id):
+        db = conn_Firestore()
+        result= db.collection(u'user_info').document(user_id).delete()    
+        print('Data Deleted')
+        return result
 
 
 
