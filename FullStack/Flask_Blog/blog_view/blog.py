@@ -13,8 +13,9 @@ def set_email():
         print('set_email', request.args.get('user_email'))
     else:
         #print(request.headers)
-        print('set_email', request.form['user_email'])
-        user = User.create(request.form['user_email'],'A')                
+        #print('set_email ', request.form['user_email'])
+        #print('blog_id ', request.form['blog_id'])
+        user = User.create(request.form['user_email'],request.form['blog_id'])                
         login_user(user,remember=True,duration=datetime.timedelta(seconds=60))          
         # content tyhpe 이 application/json 일경우 get_json()
         return redirect(url_for('blog.fullstack1'))
@@ -28,9 +29,14 @@ def logout():
 @blog_abtest.route('/fullstack1')
 def fullstack1():
     print(BlogSession.session_count)   
-    if current_user.is_authenticated:       
-        return render_template('blog_A.html',user_email=current_user.user_email)
+    if current_user.is_authenticated:
+        webpage_name=BlogSession.get_blog_page(current_user.blog_id)
+        BlogSession.save_session_info(
+            session['client_id'], current_user.user_email,webpage_name
+        )       
+        return render_template(webpage_name,user_email=current_user.user_email)
     else:
         webpage_name = BlogSession.get_blog_page()
-        BlogSession.save_session_info(session['client_id'], 'anonymous', webpage_name)
+        BlogSession.save_session_info(
+            session['client_id'], 'anonymous', webpage_name)
         return render_template(webpage_name)
