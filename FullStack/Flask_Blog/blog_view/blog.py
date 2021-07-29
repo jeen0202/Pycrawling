@@ -8,16 +8,12 @@ blog_abtest = Blueprint('blog', __name__)
 
 @blog_abtest.route('/set_email', methods=['GET','POST'])
 def set_email():
-    if request.method == "GET":
-        #print(request.headers)
+    if request.method == "GET":        
         print('set_email', request.args.get('user_email'))
-    else:
-        #print(request.headers)
-        #print('set_email ', request.form['user_email'])
-        #print('blog_id ', request.form['blog_id'])
+    else: 
         user = User.create(request.form['user_email'],request.form['blog_id'])                
         login_user(user,remember=True,duration=datetime.timedelta(seconds=60))          
-        # content tyhpe 이 application/json 일경우 get_json()
+        # content type 이 application/json 일경우 get_json()
         return redirect(url_for('blog.fullstack1'))
 @blog_abtest.route('logout')
 def logout():
