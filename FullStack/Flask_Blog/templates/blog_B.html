@@ -56,17 +56,24 @@
   <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
     <div class="col-md-6 px-0">
       <h1 class="display-4 ">풀스택에 대한 오해들</h1>
-      <form action='/blog/set_email' method='post'>
+       {% if user_email != null%}
+      <div class="col-auto">
+      {{ user_email}} 로 구독 중입니다.
+      <a type="button" class="btn btn-primary" href="/blog/logout" >구독 취소</a>
+      </div>
+      {%else%}
+      <form action='/blog/set_email' method="post">
         <div class="row g-3 align-items-center">
           <div class="col-auto">
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email address">
+            <input type="email" class="form-control" name="user_email" aria-describedby="emailHelp" placeholder="email address">
             <input type="hidden" name='blog_id' value="B">
           </div>
           <div class='col-auto'>
-          <button type="submit" class="btn btn-primary">구독</button>
+            <button type="submit" class="btn btn-primary">구독</button>
           </div>
         </div>
       </form>
+      {% endif %}
     </div>
   </div>
 

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, make_response
+from flask import Flask, jsonify, request, render_template, make_response, session
 #Flask : 서버
 #jsonify, request, make_response : REST
 #render_template : html 분리
@@ -31,6 +31,11 @@ def load_user(user_id):
 def unauthorized():
     return make_response(jsonify(success=False),401)
 
+@app.before_request
+def add_before_request():
+    if 'cliend_id' not in session:
+        session['client_id'] = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+        
 if __name__ == '__main__':
     app.run(host='localhost',port ='8085', debug=True)
 
