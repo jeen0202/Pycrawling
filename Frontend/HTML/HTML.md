@@ -1,4 +1,4 @@
-# HTRL의 이해
+# HTML의 이해
 기본 html 문법 : html5
 
 ## DOCTYPE
@@ -79,6 +79,7 @@ JS코드를 html문서 내부에서 작성할 때 사용
 
 JS코드는 파일 형태로 link태그를 사용해 가져오거나, script 태그를 사용해 직접 문서에 삽입하는 방식으로 적용 가능
 
+<<<<<<< HEAD
 기존에는 ```<script type="text/javascrpit">```라고 작성하였으나<br>
 html5에서는 ```<script>```라고만 작성하면 된다.
 
@@ -140,3 +141,7 @@ html5에서는 ```<script>```라고만 작성하면 된다.
  속성
  * colspan : td 태그에 사용하여 열을 확장
  * rowspan : tr 태그에 사용하여 행을 확장
+=======
+기존에는 ```<script type="text/javascrpit">```라고 작성하였으나
+html5에서는 ```<script>```라고만 작성하면 된다.
+>>>>>>> c888d6655da690a90164db0c5d400ef82108408f
