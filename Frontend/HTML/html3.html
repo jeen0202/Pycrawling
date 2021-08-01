@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <style type="text/css">
+    table, th,tr, td {
+        border: solid,
+    }
+    </style>
     <meta charset="UTF-8">
     <meta
         name="description"
@@ -10,11 +15,6 @@
     <meta name="author" content="Sejing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-    table, th,tr, td {
-        border: solid,
-    }
-    </style>
     <title>Document</title>
 </head>
 <body>
@@ -53,5 +53,11 @@
             </tr>
         </tbody>
     </table>
+    <h3>form 테스트</h3>
+    <form action:'login.html' method="post">
+        ID : <input type="text" name="id" autocomplete="on"/>
+        PW : <input type="password" autofocus name="pw"/>
+        <input type="button" value="입력버튼"/>
+    </form>
 </body>
 </html>
