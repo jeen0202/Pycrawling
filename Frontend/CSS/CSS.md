@@ -109,3 +109,95 @@ href='https://cdnjs.cluudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css>
 ```html
 <style> [attr] {color : red;}</style>
 ```
+
+## 다양한 CSS Selector 조합
+* 태그,id,class selector를 조합해서 복합적으로 사용 가능
+* HTML 문서 특정 태그에 여러 클래스가 지정될 경우, 스페이스를 이용해서 여러 클래스 설정 가능
+    + class = '클래스명1 클래스명2 클래스명3'
+    + 이 경우 css selector는 .클래스명1.클래스명2.클래스명3과 같이 사용 가능
+```html
+<style>
+    h1.dave.funcoding#lee {color:gray;}
+</style>
+</head>
+<body>
+    <h1 class='dave funcoding' id='lee'>Hello World</h1>
+</body>
+```
+## 복합 selector (Combinator)
+
+* 태그 안에 또다른 태그를 넣을 수 있으므로, 요소간에 부모/자식의 관계가 매겨짐
+* 관계를 기반으로 HTML 문서 특정 부분을 선택 할 수 있는 문법
+```html
+<div>
+    <h1>Sejing</h1>
+    <p> 잔잔바리 코딩을 운영하고 있습니다. </p>
+    <p><span>좋은 서비스를</span> 만드는일에 집중하고 있습니다.</p>
+```
+* 후손 셀렉터 : ``` ```로 표시
+    + 부모 태그안에 있는 모든 하위 태그를 하위 요소라고 부름
+    + 부모 태그(selector1)안에 있는 모든 태그중에 selctor2를 선택
+    ```selector1 selector2```
+* 자식 셀렉터 : ```>```로 표시
+    + 부모 태그 안에 있는 바로 다음 레벨의 태그중에 selector2 선택
+    ```selector1>selector2```
+* 인접 형제 셀렉터 : ```+```로 표시
+    + 태그와 동일한 레벨에 위치하고 바로 뒤에 위치한 selector를 선택
+    ```selector+selector2```
+* 일반 형제 셀럭터 : ```~```로 표시
+    + 태그와 동일 레벨에 위치하고, selector1 뒤에 위치하는 selector를 선택
+    ```selector1~selector2```
+
+## 가상 클래스 셀렉터
+* 요소에 특정 이벤트 발생시를 선택하는 문법
+### 가상 클래스의 종류
+* link : 방문하지 않은 링크가 적용된 요소
+* visited : 한번이라도 방문한 링크가 적용된 요소
+* hover : 특성 요소에 커서가 올라간 상태
+* active : 링크 요소를 클릭한 상태
+* focus : 특정 요소에 포커스가 있는 상태
+
+## UI 요소 상태 셀렉터
+: 특정 UI 요소 상태에 따른 셀렉터
+
+* enabled : UI 셀렉터가 사용 가능
+* disabled : UI 셀렉터가 사용 불가능
+* checked : UI 셀렉터가 체크된 상태
+* indeterminate : UI 셀렉터 상태가 결정되지 않은 상태
+
+## 구조 가상 클래스 셀렉터
+
+* first-child : 첫번쨰 자식인 요소 선택
+* last-child : 마지막 자식 요소 선택
+* nth-child : n 번째 자식 요소 선택
+* nth-last-child : 마지막 자식 요소에서 n번째 자식요소 선택
+
+* first-of-type : 셀렉터에 해당하는 요소의 부모 요소의 자식중 셀렉터중 첫번째 요소를 선택
+* last-of-type : 셀렉터에 해당하는 요소의 부모 요소의 자식중 셀렉터중 마지막 요소를 선택
+
+## 부정 셀렉터
+* not(셀렉터) - 셀렉터에 해당하지 않은 모든 요소 선택
+
+## 정합성 체크 셀렉터 
+* valid(셀렉터) : 정합성이 검증된 input 또는 form 요소 선택
+* invalid(셀렉터) : 정합성 검증이 실패한 input 또는 form 요소 선택
+
+## input 태그 유효성 검사와 정합성 체크 셀렉터
+>> 정합성 체크 셀렉터 이해와 활용을 위해, input 태그의 유효성 검사 관련 속성을 이해 해야한다.<br>
+다양한 속성이 있지만, 크로스 브라우저를 위해, 호환성이 떨어지는 속성은 사용하지 않는 편이 좋기에, 호환성이 높은 속성만 정리
+
+### required 속성
+* input 태그로 생성된 입력창에 데이터를 무조건 넣어야 한다.()
+
+### pattern 속성
+* input 태그로 생성된 입력창에 넣은 데이터가 원하는 데이터 포맷에 맞으면 검증완료
+* pattern 값은 정규표현식 
+
+### 가상 요소 셀렉터
+* 선택한 요소 안의 특정 부분을 선택
+* first-letter : 요소의 첫 글자
+* first-line : 요소의 첫 라인 선택
+* atfer : 요소의 뒤에 위치하는 공간, content property와 함께 사용
+* before : 요소의 앞에 위치하는 공간, content property와 함께 사용
+* selection : 요소에서 드래그한 부분을 선택
+> 가상요소 셀렉터는 ```::``` 을 사용한다.

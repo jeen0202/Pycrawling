@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    a:link {
+        color : red;
+    }
+    a:visited {
+        color : blue;
+    }
+    a:hover {
+        color : green;
+    }
+    a:active {
+        color : gray;
+    }
+    input:focus {
+        color : brown;
+    }
+    input[type='text']:invalid{
+        background-color : red;
+    }
+    input[type='text']:valid{
+        background-color : yellow;
+    }    
+    </style>
+</head>
+<body>
+    <h1>Sejing</h1>
+    <a href = "https://www.fun-coding.org">잔잔바리코딩</a>
+    <form action="https://www.fun-coding.org/ffffff" method='get'>
+    <input type='text' id='data' name='data' required /><br />
+    <input type="text" id = 'month' name= 'month' pattern="[0-9]{6}" required/>
+    <input type='submit' value="SUbmit"/>
+</body>
+</html>
