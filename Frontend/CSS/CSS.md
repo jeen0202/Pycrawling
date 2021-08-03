@@ -60,3 +60,52 @@ href='https://cdnjs.cluudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css>
 + opacity : 투명도 설정, 0.0이 투명, 1.0이 불투명
 + opacity 값은 모든 자식 요소에 투명도 값 상속
 + RGBA는 상속되지 않음
+
+# CSS Selector
+* HTML 문서의 특정 부분을 선택하기 위한 문법
+
+(구) reset.css
+* 최근에는 사용되지 않음
+```html
+<style>
+    * {
+        margin : 0;
+        padding : 0;
+        border : none;
+    }
+</style>
+```
+
+## 태그 Selector
+```html
+<style>
+    h1 { color : red;}
+</style>
+```
+
+## ID Selector
+#아이디명으로 지정
+```html
+<style>
+    #dave {color : blue;}
+</style>
+```
+## class Selector
+.클래스명으로 지정
+```html
+<style>
+    .dave {color : yellow;}
+</style>
+```
+
+## attribute(속성) selector
+* [속성] : attr 속성을 가지는 모든 태그(요쇼)
+* [속성=값] : 속성값이 일치하는 태그
+* [속성~=값] : 속성값이 value를 단어로 포함하는 모든 태그(요소)
+* [속성 |=값] : 속성값이 일치하거나 값으로 시작하면서 문자가 곧바로 따라오는 태그
+* [속성 ^=값] : 태그의 속성값이 값으로 시작하는 모든 태그
+* [속성 $=값] : 태그의 요소중 속성값이 값으로 끝나느 모든 태그
+* [속성 *=값] : 태그의 속성값이 값을 포함하는 모든 태그
+```html
+<style> [attr] {color : red;}</style>
+```
