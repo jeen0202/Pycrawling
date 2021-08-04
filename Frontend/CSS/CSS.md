@@ -219,6 +219,74 @@ block 또는 inline-block 특성을 가지는 요소 => Box 형태, 세부 사�
     + width/height는 content  영역의 너비와 높이
 + box-sizing 속성이 border-box로 지정되어 있으면, content+ padding+ border영역의 너비와 높이가 된다.
 + width/height 포함, 모든 box model 속성은 상속되지 않는다.
+
 > content 영역밖으로 컨텐츠가 넘치는 경우, overflow 속성을 hidden으로 설정하면, 이를 감출 수 있다.
 
-2. 
+#### 참고:max-width/max-height 속성
+ 요소 너비가 브라우저 너비보다 클 경우, 스크롤바가 만들어 질 수 있음<br>
+ max-width를 사용하면 자동으로 요소 너비가 줄어듬
+
+2. margin/padding
++ margin 또는 padding에 -top,-right,-bottom,-left 를 붙여 방향별 margin/paddin 설정 가능
++ 순서대로 작성하여 한번에 설정하는 단축 속성도 사용 가능
+```html
+margin : 10px 20px 30px 40px;
+---아래와 동일---
+margin-top : 10px;
+margin-right : 20px;
+margin-bottom : 30px;
+margin-left : 40px;
+```
+3개의 속성값 설정시
+```html
+margin : 10px 20px 30px
+---아래와 동일---
+margin-top : 10px;
+margin-right : 20px;
+margin-left: 20px;
+margin-bottom : 30px
+```
+
+2개의 속성값 설정시
+```html
+padding : 10px 20px;
+---아래와 동일---
+margin-top : 10px;
+margin-bottom : 10px;
+margin-right : 20px;
+margin-left : 20px
+```
+
+#### 참고 : block 특성을 가진 요소에 대한 중앙 정렬(margin 활용)
+```html
+width : 10px /* 명시적으로 지정*/
+margin-right : auto;
+margin-left : auto;
+---단축 설정 활용---
+margin: 10px auto
+```
+
+3. border
+    1. border-style : 선 스타일
+    2. border-width : 선 굵기, 정수형이나, thin, medium의 키워드로도 설정가능
+        + border-width는 border-style과 함께 설정되어야 한다.
+    3. border-color : 선 색상 지정
+    4. border-radius : 테두리 모서리 둥글게 표시
+    + 단축 속성 : border-width, border-style, border-color 순으로 한번에 설정할 수 있는 단축 속성
+
+## box-sizing
+width : height 대상 영역 설정
+
+* content-box : width,height 속성 값은 content영역 의미(default)
+* border-box : width,height 속성 값은 content+padding+border를 의미
+
+### 참고 : CSS 스타일링과 box-sizing
+* CSS 적용시, 모든 block 요소는 box-sizing을 border-box로 하는것이 일반적
+* box-sizing은 상속되지 않고, HTML 요소의 default box-sizing을 content-box 이므로, 전체 요소의 box-sizing을 border-box로 설정하기위해 다음과 같이 설정
+```html
+*,
+*::before,
+*::after {
+    box-sizing : border-box;
+}
+```
