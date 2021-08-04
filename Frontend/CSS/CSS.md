@@ -201,3 +201,24 @@ href='https://cdnjs.cluudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css>
 * before : 요소의 앞에 위치하는 공간, content property와 함께 사용
 * selection : 요소에서 드래그한 부분을 선택
 > 가상요소 셀렉터는 ```::``` 을 사용한다.
+
+# CSS BOX MODEL
+block 또는 inline-block 특성을 가지는 요소 => Box 형태, 세부 사장을 수정할 수 있다.
+
+## BOX MODEL PROPERTY
+
+* content : 요소의 실제 내용이 위치하는 영역 (width,height)
+* padding : border 안쪽의 내부 여백 여역, 패딩영역의 두께를 의미
+* border : 테두리 영역, 속성값으로 두께 지정
+* margin : border 바깥의 외부 여백 영역, 배경색 지정 불가
+
+### 주요 속성
+
+1. width/height
++ box-sizing : default값이 content-box,
+    + width/height는 content  영역의 너비와 높이
++ box-sizing 속성이 border-box로 지정되어 있으면, content+ padding+ border영역의 너비와 높이가 된다.
++ width/height 포함, 모든 box model 속성은 상속되지 않는다.
+> content 영역밖으로 컨텐츠가 넘치는 경우, overflow 속성을 hidden으로 설정하면, 이를 감출 수 있다.
+
+2. 
