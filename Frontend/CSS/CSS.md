@@ -306,6 +306,7 @@ width : height 대상 영역 설정
 
 ## background-repeat 속성
 : 배경 이미지가 요소 사이즈보다 작을때의 채우기 설정
+
 * repeat : 배경영역을 채울 때 까지 반복, 사이즈가 초과 될경우 잘림(default)
 * space : 사이즈가 초과되지 않게 image간의 간격을 조정하며 반복,
     + image 크기가 요소 사이즈보다 클 경우 이미지가 잘릴수 있음
@@ -328,3 +329,37 @@ width : height 대상 영역 설정
 * cover : 요소를 채울 수 있도록 이미지 사이즈 조정
 * contain : 요소 사이즈를 벗어나지 않는 최대 크기로 조정
 * initial : 기본값으로 설정
+
+## background attatchment 속성
+: 브라우저의 스크롤시의 배경 이미지 설정
+
+* fixed : 화면을 스크롤 하여도 background image는 고정
+* scroll : 화면 스크롤시 내려감(default)
+
+## background-position 속성
+background-image는 좌측 상단에 위치(default) <br>
+이를 background-position의 좌표(x,y) 형식으로 위치를 지정할 수 있음
+
+### 주요 속성 값
+: 기본적으로 두 값(x,y) 설정 가능, 한 속성만 설정할 경우 다른 값은 center<br>
+
+    center : 정중앙
+    left top : 좌상단
+    left center : 좌중앙
+    left bottom : 좌하단 ...
+    x y : %,px,em 등으로 위치 지정 가능, 0% 0% 은 좌상단, 100% 100% 은 우하단
+
+## background-color 속성
+CSS 색상 단위로 배경색 설정 가능
+    + transparent : 투명 (default)
+
+## background 단축 속성
+다음 순서대로 다양한 background 속성을 한번에 설정 가능<br>
+    background : color image repeat attachment position
+
+**예시**
+```html    
+<style>
+    background : yellow url(주소) no-repeat fixed center;
+</style>
+```
