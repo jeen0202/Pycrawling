@@ -290,3 +290,41 @@ width : height 대상 영역 설정
     box-sizing : border-box;
 }
 ```
+
+# CSS background
+> 메인 화면에서 background 이미지를 꼭 사용하게 되고, 신뢰감있는 사이트 구성을 위해 세부설정이 필요하다.
+
+## background-image 속성
+: CSS요소에 배경 이미지를 설정
+```html
+<style>
+    div {
+        background-image : url(주소);
+    }
+</style>
+```
+
+## background-repeat 속성
+: 배경 이미지가 요소 사이즈보다 작을때의 채우기 설정
+* repeat : 배경영역을 채울 때 까지 반복, 사이즈가 초과 될경우 잘림(default)
+* space : 사이즈가 초과되지 않게 image간의 간격을 조정하며 반복,
+    + image 크기가 요소 사이즈보다 클 경우 이미지가 잘릴수 있음
+* round : 사이즈가 초과되지 않게 image의 사이즈 조정하며 반복
+* no-repeat : 반복 없음
+
+### 반복 세부 설정
+* repeat-x : 가로만 반복
+* repeat-y : 세로만 반복
+* repeat repeat : 가로, 세로 동시 조정
+
+### 복수의 이미지 설정 가능
+: 먼저 설정된 image가 전면에(repeat 설정시, 먼저 설정된 이미지로 덮일 수도 있음)
+
+## background-size 속성
+: 배경 이미지의 사이즈 설정을 위한 속성
+
+* auto : 이미지 크기 유지
+* lengt : 두 개의 값을 입력받아 가로, 세로 크기를 조정
+* cover : 요소를 채울 수 있도록 이미지 사이즈 조정
+* contain : 요소 사이즈를 벗어나지 않는 최대 크기로 조정
+* initial : 기본값으로 설정
