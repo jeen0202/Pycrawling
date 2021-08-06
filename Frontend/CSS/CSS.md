@@ -363,3 +363,62 @@ CSS 색상 단위로 배경색 설정 가능
     background : yellow url(주소) no-repeat fixed center;
 </style>
 ```
+
+# CSS Block 과 inline
+
+## block과 inline
+* 모든 HTML 태그는 각 태그마다 default로 block, inline 속성을 가진다.
+
+## block 특성
+* 항상 새로운 라인에 표시 => 한 line에 block 요소는 1개만 가능
+* 화면 너비 전체를 차지 (width : 100%)
+* width, height, margin, padding 속성 설정 가능
+* block 내부에 inline 요소 포함 가능
+* block 특성을 default로 가지는 주요 HTML 태그
+    + div
+    + h1~h6
+    + p, ol, ul, li
+    + hr, table, form
+
+## Inline 특성
+* 동일한 라인에 다른 요소와 함께 위치 가능
+* content 너비만큼 width 차지
+* width,height, margin, padding 속성 지정 불가
+    + 상,하 여백은 line-height로 지정 가능
+* inline 요소 뒤에 공백이 있을 경우 정의하지 않은 space가 자동 지정
+    + 공백, 엔터, 스페이스 모두 임의 space(4px)로 변환
+* block의 특성을 가지는 요소를 포함할 수 없음
+* inline 특성을 default로 가지는 HTML 주요 태그
+    + span, a, strong, img, br, input, select, textarea, button
+
+### CSS display 속성
+: 모든 HTML 태그의 default 특성을 display 속성을 통해 변경 가능하다.<br>
+
+**display 속성**<br>
+
+    block : block 특성
+    inline : inline 특성
+    inline-block : inline-block 특성
+    none : 해당 요소 미표시(차지하는 공간 삭제)
+
+### visibility 속성
+요소를 보이게 할 것인지 아닌지를 설정
+
+> ```display:none``` 과 ```visibility:hidden```의 차이점에 주의 할것 
+
+    visible : 해당요소를 보이게 함
+    hidden : 해당요소를 보이지 않게 함 (차지하던 공간은 그대로 남겨둠)
+    collapse : 행이나 열을 보이지 않게(table)
+    none : table의 row나 column을 보이지 않게 한다. Chrome에서 미동작
+
+### inline-block 특성
+block과 inline 특성 모두를 가짐
+
+**inline 요소와 같이 한 라인에 표현되면서도, width,height,margin,padding 설정 가능**<br>
+
+주요 특성
+
+* 동일라인에 다른 요소들과 표시
+* width, height, margin, padding 지정 가능
+* content 너비만큼 width 차지
+* 요소 뒤에 공백이 있을 경우 정의하지 않은 space(4px)가 자동 지정
