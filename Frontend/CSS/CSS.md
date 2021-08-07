@@ -422,3 +422,109 @@ block과 inline 특성 모두를 가짐
 * width, height, margin, padding 지정 가능
 * content 너비만큼 width 차지
 * 요소 뒤에 공백이 있을 경우 정의하지 않은 space(4px)가 자동 지정
+
+# CSS font
+
+## font-size 속성
+
+**주요 값**
+    medium : 웹브라우저에서 정한 기본 글자 크기
+    xx-small,x-small,small,large,x-large,xx-large : medium에 대한 상대적 크기 설정
+    smaller,larger : 부모 요소에 대한 상대적인 크기 설정
+    length : px, %, em, rem 등의 CSS 단위로 크기 설정
+
+## font-family 속성
+> 일반적으로 font-family에 여러 폰트를 설정하는 경우가 많음
+
+```html
+    font-family : 첫번째 폰트, 두번째 폰트, ...
+```
+
+* 폰트는 웹 페이지를 보는 각 사용자 PC에 설치 되어있어야 하므로, 설정된 순서부터 설치되어있는 폰트를 설정
+* 일반적으로 세개 정도 설정하고, 마지막 폰트는 어느 PC에나 있을법한 generic-family를 사용
+> generic family에는 seift, monospace, cursive, fantasy 등이 있음
+
+## 웹 폰트 사용법
+* 폰트가 설치되어있어야 표시됨
+* 웹폰트를 사용하여, 사용자 PC에 폰터가 없더라고, 웹 브라우저에서 폰트를 다운로드받아 표시되게 할 수 있음
+> 웹폰트는 pc 설치 폰트보다 경량화 된 형태
+> 다운로드 받아 표시하므로 설치되어있는 폰트 사용보다 느릴 수 있음
+
+**적용 예시(Black Han Sans)**
+
+1. link 태그 복사
+```html
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+```
+2. font-family 설정에서 폰트 이름 확인
+```html
+    font-family : 'Black Han Sans' , sans-serif;
+```
+3. 작성할 html 페지의 head에 link 태그로 삽입
+
+
+## font-style 속성
+: 글자 모양 설정
+
+* normal : default 모양
+* italic : 기울임
+* oblique : 기울임
+
+## font-weight 속성
+: 글자 굵기 설정
+
+* number : 100,200,300,....900 (숫자로 굵기를 미세하고 조정가능)
+* normal : 기본 속성(400)
+* bold : 굵은 글씨(700)
+* bolder : 상속된 값보다 굵게
+* lighter : 상속된 값보다 얇게
+
+
+## font-variant 속성
+: 소문자를 소문자 크기의 대문자로 바꾸는 설정
+
+* normal : 그대로
+* small-caps : 소문자를 소문자 크기의 대문자로
+
+## line-height 속성
+: 라인 높이 설정
+
+* normal : 기본값(보통 1.2)
+* length : px, %, em, rem 등의 CSS 단위로 높이 설정
+* number : 글자 크기의 배수로 높이 설정
+
+## letter-spacing, word-space 속성
+: 글자 사이 간격, 단어 사이 간격 설정
+> 보통 CSS 단위를 사용하며, 키울수록 간격이 넓어지고, 음수도 가능
+
+## text-align 속성
+: 글자 수평 설정
+    left, right, center : 좌, 우, 중앙 정렬
+    justify : 양쪽 정렬
+
+## text-decoration 속성
+: 글자에 선을 넣는 속성
+    none : 선 없음(default)
+    line-through : 글자 중간에 선
+    overline : 글자 위에 선
+    underline : 글자 아래에 선
+
+## white-space 속성
+: 글자에 들어있는 스페이스, 탭, 줄바꿈, 자동 줄바꿈 설정
+    normal : 스페이스와 탭 병합, 줄바꿈 병합, 자동 줄바꿈
+    nowrap : 스페이스와 탭 병합, 줄바꿈 병합,
+    pre : 스페이스와 탭 보존, 줄바꿈 보존
+    pre-wrap : 스페이스와 탭 보존, 줄바꿈 보존, 자동 줄바꿈
+    pre-line : 스페이스와 탭 병합, 줄바꿈 보존, 자동 줄바꿈
+
+## text-overflow 속성
+: 문자열이 넘칠 경우의 처리 설정
+
+1. width 설정
+2. white-space : nowrap
+3. overflow 속성이 visible 이외의 값
+
+**속성 값**
+    clip : 텍스트를 잘라냄
+    ellipsis : 말줄임표로 표시
+> 이외의 값은 호환성이 떨어져 사용성이 낮음
