@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+      div {
+        width: 100px;
+        height: 100px;
+        border: 2px solid #f2b441;
+        border-radius: 10px;
+        transition-property: width;
+        transition-duration: 5s;
+      }
+      .box1 {
+        background: #f2d541;
+        transition-timing-function: ease;
+      }
+      .box2 {
+        background: #5fb6d9;
+        transition-timing-function: linear;
+      }
+      .box3 {
+        background: #d90404;
+        transition-timing-function: ease-in;
+      }
+      .box4 {
+        background: #3b9cd9;
+        transition-timing-function: ease-in-out;
+      }
+      .box5 {
+        background: #3b9cd9;
+        transition-timing-function: step-start;
+      }
+      .box6 {
+        background: #3b9cd9;
+        transition-timing-function: step-end;
+      }
+      .box7 {
+        background: #3b9cd9;
+        transition-timing-function: steps(4, start);
+      }
+      .box8 {
+        background: #3b9cd9;
+        transition-timing-function: steps(2, start);
+      }
+      .box9 {
+        background: #3b9cd9;
+        transition-timing-function: steps(4, end);
+      }
+      .box10{
+        background : #3b9cd9;
+        transition-timing-funciton: cubic-bezier(0.1,0.1,0.7,1);
+      }
+      div:hover {
+        width: 100%;
+      }
+    </style>
+<body cz-shortcut-listen="true">
+    <div class="box1">ease</div>
+    <div class="box2">linear</div>
+    <div class="box3">ease-in</div>
+    <div class="box4">ease-in-out</div>
+    <div class="box5">step-start</div>
+    <div class="box6">step-end</div>
+    <div class="box7">steps(4, start)</div>
+    <div class="box8">steps(2, start)</div>
+    <div class="box9">steps(4, end)</div>
+    <div class="box10">cubic-bezier</div>      
+</body>
+</html>
+

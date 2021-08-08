@@ -528,3 +528,76 @@ block과 inline 특성 모두를 가짐
     clip : 텍스트를 잘라냄
     ellipsis : 말줄임표로 표시
 > 이외의 값은 호환성이 떨어져 사용성이 낮음
+
+# 위치 관련 속성
+
+## position 속성
+: HTML 요소 위치 결정 방식 설정
+
+1. static position(정적 위치)
+* 다른 태그와의 관계에 의해 자동 배치, 위치 임의 설정 불가능, 
+
+2. relative position(상대 위치)
++ relative 미설정시 원래 위치를 기준으로 좌표 지정 가능
++ 문서의 일반적인 흐름에 포함
+    - 문서의 일반적인 흐름에 포함 되므로 relative 미설정시 요소가 상대 위치로 이동
+> 문서의 일반적인 흐름 : 요소를 어느 방향으로 나열할지 결정
+
+3. absolute position(절대 위치)
++ 가장 가까운 위치의 relative인 부모 요소를 기준으로 left,right,top.bottom 값으로 위치 설정
++ relative인 부모 요소가 없으면, body 요소를 기준으로 위치
++ 문서의 일반적 흐름에서 포함되지 않고, 페이지 레이아웃 공간도 배정하지 않음
+    - 다른 요소가 먼처 위치를 점유해도 덮어 씌워짐(이를 부유 객체라고 함)
+
+4. fixed position(고정 위치)
++ viewport를 기준으로 특정 위치에 배치
++ 문서의 일반적 흐름에서 배제, 레이아웃 공간 미배정
+
+## z-index, overflow 속성
+
+### z-index 속성
+: 큰 숫자값을 지정할 수록 화면 전면에 출력
+
+### overflow 속성
+: 자식 요소가 부모 요소의 영역을 벗어났을 때 처리 방법을 정의
+
+    visible : 벗어난 부분 표시
+    hidden : 벗어난 부분을 잘라냄
+    scroll : 벗어난 부분이 없어도 스크롤 표시
+    auto : 벗어난 부분이 있을때만 스크롤 표시
+
+# CSS transition
+: CSS 속성 변경시, 값 변화가 텀을 두고 일어나도록 해서, 일종의 애니메이션 효과를 주는 기능
+
+## 주요 CSS transition 속성
+    transition-property : 대상이 되는 CSS 속성 지정
+    transition-duration : 트랜지션이 일어나는 시간을 지정
+    transition-timing-function : 함수를 사용해 시간별 트랜지션 속도 지정
+    transition-delay : 트랜지션 시작 시간 지정
+    transition : 모든 속성을 한번에 지정하는 단축 속성
+
+## transition-property와 duration
+**transition-property** : 대상이 되는 CSS 속성명을 지정(default : all) <br/>
+**transition-duration** : 트랜지션이 일어나는 일정 시간을 s, ms 단위로 지정(default : 0s)
+
+## transition-timing-function
+cubic-bezier() 함수에 대한 이해 필요<br>
+>cubic-bezier()는 bezier curves(베지어 곡선) 을 정의하는 함수로 사용
+
+### 주요 transition-timing-function 속성 값
+* ease : 느리게 시작하여 빨라졌다가 다시 느려지며 종료
+* linear : 동일한 속도로 진행
+* ease-in : 느리게 시작하여 동일한 속도로 마무리
+* ease-in-out : 일정 속도로 진행, 점점 느려지며 종료
+* step-start : 바로 실행
+* step-end : 일정 시간 후 종료
+* steps : n 단계로 나누어서 변화
+* cubic-bezier(n,n,n,n) : 베지어 곡선으로 진행(n값 : 0~1)
+
+## transition-delay
+: 언제 시작할지 지정
+
+### transition 단축 속성
+```html
+    transition : property duration function delay
+```
