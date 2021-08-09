@@ -528,3 +528,91 @@ block과 inline 특성 모두를 가짐
     clip : 텍스트를 잘라냄
     ellipsis : 말줄임표로 표시
 > 이외의 값은 호환성이 떨어져 사용성이 낮음
+
+# CSS animation
+transition 과 유사하게, CSS 스타일을 부드럽게 전환
+
+## transition과 animation
+transition : 변경되어야할 스타일만 지정<br>
+animation : 중간에 변경되는 스타일을 세밀하게 지정<br>
+
+animtaion은 CSS 스타일과, 중간 상태를 나타내는 키프레임으로 구성
+
+> JS 기반 애니메이션보다, 렌더링 성능이 좋다.
+> 가벼운 효과 => CSS 애니메이션
+> 세밀한 제어 => JS 애니메이션
+
+## 주요 CSS animation 속성
+
+### Keyframes 문법
+
+1. keyframes 이름 정하기
+```html
+@keyframes 이름 {
+
+}
+```
+2. keyframes의 원하는 시점에 스타일 지정하기
+0% , from : 시작 프레임<br>
+100% , to : 마지막 프레임<br>
+0~ 100% 사이 : 원하는 시점 프레임<br>
+```html
+    @keyframes ball {
+        0%{
+
+        }
+        50%{
+
+        }
+        100%{
+
+        }
+    }
+```
+3. 애니메이션 요소 설정
+    + animation-name에서 정희한 이름
+    + animation-duration에 소요시간 지정
+    + animation-iteration-count에 반복횟수 지정(infinite : 무한 반복)
+```html
+    name{
+        animation-name : ball;
+        animation-duration : 5s;
+        animation-iteration-count : infinite;
+    }
+```
+
+### animation-timing-function
+transintion-timing-function과 동일하게 사용 가능<br>
+default는 ease
+
+### animation-duration, animiation-delay
+동작 시간과, 지연시간 설정 (s,ms)
+
+### animation-iteration-count
+정수로 지정 가능, infinite는 무한 반복
+
+### animation-direction
+    속성        설명
+    normal      0에서 100%까지 진행
+    reverse     100%에서 0방향으로 진행
+    alternate   홀수번째는 normal, 짝수 번째는 reverse로 진행
+    alternate-reverse 홀수번쨰에는 reverse, 짝수 번째는 normal로 진행   
+
+### animation-fill-mode
+> 이해하기 복잡한 개념이므로 실습을 통해
+
+    none : 초기상태 => 0% => 100% => 초기상태
+    forward : 초기상태 => 0% => 100% => 100%
+    backwards : 0% => 0%=> 100%=> 초기상태
+    both : 0 => 0 => 100% => 100%
+
+### animation-play-state
+javascript와 사용해, 이벤트에 따라 해당 속성을 변경
+
+    paused : 중지 상태
+    running : 실행 상태
+
+### animation 단축 속성
+```html
+    animation : name duration timing-function delay iteration-count direction fill-mode play-state
+```
