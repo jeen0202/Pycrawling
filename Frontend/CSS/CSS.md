@@ -616,3 +616,37 @@ javascript와 사용해, 이벤트에 따라 해당 속성을 변경
 ```html
     animation : name duration timing-function delay iteration-count direction fill-mode play-state
 ```
+
+# CSS transform
+: 요소의 회전, 크기 조절, 기울이기, 이동효과를 부여하는 함수 제공<br>
+
+키프레임 기반 설정은 제공하지 않으므로, 이를 위해서는 CSS animation, transtion과 함께 사용해야 한다.
+
+## CSS transform 사용법
+```html
+transform : tranform 함수;
+```
+CSS transform 함수로 요소 이동 및 변형시 x,y,z로 요소 변경을 설정 할 수 있다.
+
+### 주요 transform 함수
+
+    translate(x,y) : 위치를 x, y 이동
+    translateX(x) : x 이동
+    translateY(y) : y이동
+    scale(x,y) : 크기를 가로 x,세로 y배
+    scaleX(x) : 가로 x배
+    scaleY(y) : 세로 y배
+    skew(x-angle,y-angle) : 가로 x, 세로 y 만큼 기울임
+    skewX(x-angle) : 가로 기울임
+    skewY(y-angle) : 세로 기울임
+    rotate(angle) : 주어진 각만큼 회전
+
+## transform-origin 속성
+: 요소의 기준점을 변경하는 속성<br>
+scale(),rotate(),translate(),skew() 동작은, 기본적으로 해당 요소의 중심 기준으로 동작 <br>
+
+사용법
+```html
+    tranform-origin : x축 | y축 | z축
+```
+
