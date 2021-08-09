@@ -650,3 +650,45 @@ scale(),rotate(),translate(),skew() 동작은, 기본적으로 해당 요소의 
     tranform-origin : x축 | y축 | z축
 ```
 
+# CSS float 속성
+웹페이지에서 텍스트와 함께 이미지 배치를 위해 고안되었지만, 수평 정렬을 위해서도 사용
+
+* 수평 정렬을 위해 float,flexbox,grid를 사용 할 수 있음
+    + float는 본래 수평 정렬을 위한 속성이 아니고 복잡하고 특별한 룰셋을 가지고 있어, 기본 동작과 달라보이는 케이스가 나타날 수 있다.
+    + flexbox와 grid는 호환성 이슈로 사용하기 어려웠지만, flexbox의 경우는 호환성이 해결된 수준
+    + flexbox,grid는 수평 정렬/배치를 위해 고안되었다.
+
+## float 속성
+
+    none: 떠있지 않게 함
+    right : 요소를 오른쪽으로 이동
+    left : 요소를 왼쪽으로 이동
+
+## clear 속성
+:float을 해제하는 속성
+    none : 양쪽 float를 사용 할 수 있음
+    right : 왼쪽 float 사용 해제
+    left : 오른쪽 float 사용 해제
+    both : 양쪽 float 사용 해제
+
+## 정렬과 float 속성
+
+* 수평정렬할 요소들을 left로 설정시 왼쪽 정렬, right로 설정시 오른쪽 정렬
+* 오른쪽 정렬의 경우, 먼저 설정한 요소가 오른쪽 끝에 놓여짐
+
+## float 정렬의 기본 문제점
+float의 부유성때문에 float 속성이 사용되지 않은 요소와 곂치는 문제가 있다.
+### 문제해결을 위해 clearfix class안에 float 요소를 사용
+```html
+.clearfix:after{
+    content: "";
+    claer : both;
+    display : block;
+}
+```
+
+## float 속성의 특성
+* float 속성으로 설정한 요소는 기본적으로 display 특성을 block 특성으로 변경
+    + display 가 flex 등으로 설정되어 있는 경우 제외
+* block 특성을 가진 요소는 기본 width가 100%인 반면 float 속성이 설정된 요소는 요소의 크기만큰 width가 설정된다.
+* float 설정시, float가 적용된 요소에 content가 있을 경우, 해당 content의 width, height가 다음 요소의 content에 영향을 줌
