@@ -692,3 +692,47 @@ float의 부유성때문에 float 속성이 사용되지 않은 요소와 곂치
     + display 가 flex 등으로 설정되어 있는 경우 제외
 * block 특성을 가진 요소는 기본 width가 100%인 반면 float 속성이 설정된 요소는 요소의 크기만큰 width가 설정된다.
 * float 설정시, float가 적용된 요소에 content가 있을 경우, 해당 content의 width, height가 다음 요소의 content에 영향을 줌
+
+# CSS 상속
+
+## 상속과 CSS 우선순위
+요소간에는 부모, 자식관계가 있고, 상속은 부모 요소의 속성을 자식요소가 물려받는 것을 의미
+
+
+## 주요 속성 별 상속 여부
+* 속성별로 상속유무가 다르다.(태그별 상속유무도 다름)
+* 상속가능 : text-align, line-heignt, color, font, visibility, opacity
+* 상속 불가능 : width, height, margin, padding, border, display, box-sizing, background, vertical-align, position, z-index, overflow, float
+
+## 강제 상속 설정
+부모의 속성중 상속되지 않는 속성을 상속하고 싶을떄는, 자식 요소의 해당 속성값을 inherit로 설정하면 된다.
+
+## CSS 우선순위와 Cascadinxg
+
+다양한 CSS 속성 적용과 상속으로 인해, 특정 요소에 어떤 속성값이 적용될지 결정해야함
+
+### Cascading 기본 규칙
+
+**중요도 : CSS를 어디에 선언했는지에 따라 우선순위가 달라진다.** 
+1. ```head``` 태그 안의 style 요소
+2. ```head``` 태그 안의 style 태그안의 @import 문
+3. ```<link>```로 연결된 CSS 파일
+4. ```<link>```로 연결된 CSS 파일 안의 @import 문
+
+**명시도 : 대상을 명확하게 지정할 수록 높은 우선순위**
+**선언순서 : HTML 문서상 뒤에 나오는 CSS가 높은 우선순쉬**
+
+### CSS 우선순위 기본 규칙
+> 중요도, 선언 순서보다는 명시도가 우선순위에 많은 영향을 미친다.
+
+1. HTML 문서상 뒤에 나올수록 높은 우선순위
+2. 기본 우선순위(높은 순으로 정렬)
+    * 속성값뒤에 !important를 기대할 경우 (최우선)
+    * 태그 안에 속성으로 기재한 style에 의해 설정된 속성 (1000점)
+    * id로 선택한 CSS Selector 에서 적용된 속성 (100점)
+    * class,html 속성, pseudo class 로 선택한 CSS Selector에서 적용된 속성(10점)
+    * 태그 또는 가상 요소 셀렉터로 선택한 CSS Selector에서 적용된 속성(1점)
+> !important > Inline Style > id > class > tag
+> !important, 태그안의 style은 현업에서는 사용을 제한한다.(복잡도 문제)
+
+
