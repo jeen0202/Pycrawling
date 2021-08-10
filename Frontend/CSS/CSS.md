@@ -765,4 +765,41 @@ width에 device-width를 입력하여 기기의 너비값에 맞추어 화면 �
     maximum-scale : 최대 배율
     minimun-scale : 최소 배율
 
-    
+## 레이아웃 과 미디어 쿼리
+Layout : 각 페이지 구성 요소를 페이지 내에 효과적으로 배열하는 작업
+
+### 반응형 레이아웃
+: HTML5에 정의된 Semantic tags 기반으로 일반 레이아웃 기반 반응형 레이아웃
+
+### 미디어 쿼리
+: 반응형 레이아웃 구현을 위해 사용되는 서로 다른 미디어 타입에 대응하기 위한 기능<br>
+CSS3의 가장 큰 추가기능 중 하나
+> @media를 사용하는 것이 핵심
+### 미디어 쿼리 기본 문법
+```html
+    @media media-type and (media-feature-rule) {
+
+    }
+```
+* media-type : all 또는 screen 사용
+    + all : 전체
+    + print : 프린트 화면
+    + screen : 브라우저 화면
+    + speech : 음성
+* media-feature-rule : media 조건, 주로 min/max-width, orientation 정도 사용
+    width/height : min-max 최소/최대 너비,높이
+    device-width : 디바이스의 물리적 너비
+    device-height : 디바이스의 물리적 높이
+    orientation : 디바이스 방향(가로:landscape, 세로:portrait)
+    aspect-ratio : viewport의 종횡비
+* 논리 연산자(and,not,only)를 붙여 복잡한 조건을 만들 수 있음
+    + only : 구형 브라우저 지원을 위해 only screen and 처럼 쓰면 좋음
+    + comma(,) : 여러 미디어 조건 나열을 위해 사용
+
+### 참고 해상도
+
+* 320px~480px : 스마트폰
+* 481px~768px : 태블릿
+* 769ox~1024px : 저해상도 노트북
+* 1025px~1200px : 데스크탑
+* 1201px~ : 고해상도 데스크탑 및 TV

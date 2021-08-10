@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0">
+</head>
+<style>
+    .header {
+    background-color: teal;
+    }
+    .nav {
+    background-color: orange;
+    }
+    .section {
+    background-color: red;
+    }
+    .article {
+    background-color: blue;
+    }
+    .aside {
+    float: right;
+    background-color: brown;
+    }
+    .footer {
+    background-color: gray;
+    }
+    @media only screen and (max-width: 768px) {
+    .aside {
+        display: none;
+    }
+    }
+    </style>
+</style>
+<body>
+    <header class="header">header</header>
+    <nav class="nav">nav</nav>
+    <aside class="aside">aside <br><br></aside>
+    <section class="section">
+      section
+      <article class="article">article</article>
+    </section>
+    <footer class="footer">footer</footer>
+</body>
+</html>
