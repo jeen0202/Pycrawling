@@ -735,4 +735,34 @@ float의 부유성때문에 float 속성이 사용되지 않은 요소와 곂치
 > !important > Inline Style > id > class > tag
 > !important, 태그안의 style은 현업에서는 사용을 제한한다.(복잡도 문제)
 
+# CSS media query와 responsive Layout
 
+## Reactive Web
+: 접속기기에 따라 자동으로 화면이 조정되는 Webpage
+
+* 기존에는 bootstrap 기반으로 반응형 웹을 자동 구현하거나, 웹 퍼블리셔가 처리
+* 풀스택이 되어, 그럴싸한 웹서비스를 구현하지 위해서 개발 단계에서 반응형 처리 필요 
+
+## 적응형웹 과 반응형 웹
+* 적응형 웹 : 사용자의 환경(mobile,pc)에 따라 다른 페이지를 보여줌
+    + ex) naver.com 과 m.naver.com
+* 반응형 웹 : 환경에 관계없이 동일한 페이지를 보여주지만, 화면 사이즈에 따라 조정
+
+
+## Pixel 과 Viewport
+* Pixel : Picture Element(화소). 컴퓨터 화면을 구성하는 최소 단위
+* Viewport : 사용자 환경에 해상도가 달라져도 동일한 화면을 구성하기 위해 도입된 개념으로 화면상의 표시 영역을 의미. 
+* meata viewport 설정 : viewport 에 입력한 width길이에 맞춰 웹 페이지표시 (default 980px)<br>
+width에 device-width를 입력하여 기기의 너비값에 맞추어 화면 출력
+### PPI(Pixels Per Inch) 
+: 픽셀 밀도, 또는 화소 밀도라고 불리며 단위 면적당 화소수를 나타냄
+
+### 주요 속성
+    width : vieport 너비(px)
+    height : viewport 높이(px)
+    initial-scale : viewport 초기 배율(default:1.0)
+    user-scale : 사용자의 웹페이지 확대-축소 가능여부(default:yes)
+    maximum-scale : 최대 배율
+    minimun-scale : 최소 배율
+
+    
