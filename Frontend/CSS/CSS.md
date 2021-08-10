@@ -529,6 +529,7 @@ block과 inline 특성 모두를 가짐
     ellipsis : 말줄임표로 표시
 > 이외의 값은 호환성이 떨어져 사용성이 낮음
 
+<<<<<<< HEAD
 # 위치 관련 속성
 
 ## position 속성
@@ -601,3 +602,279 @@ cubic-bezier() 함수에 대한 이해 필요<br>
 ```html
     transition : property duration function delay
 ```
+=======
+# CSS animation
+transition 과 유사하게, CSS 스타일을 부드럽게 전환
+
+## transition과 animation
+transition : 변경되어야할 스타일만 지정<br>
+animation : 중간에 변경되는 스타일을 세밀하게 지정<br>
+
+animtaion은 CSS 스타일과, 중간 상태를 나타내는 키프레임으로 구성
+
+> JS 기반 애니메이션보다, 렌더링 성능이 좋다.
+> 가벼운 효과 => CSS 애니메이션
+> 세밀한 제어 => JS 애니메이션
+
+## 주요 CSS animation 속성
+
+### Keyframes 문법
+
+1. keyframes 이름 정하기
+```html
+@keyframes 이름 {
+
+}
+```
+2. keyframes의 원하는 시점에 스타일 지정하기
+0% , from : 시작 프레임<br>
+100% , to : 마지막 프레임<br>
+0~ 100% 사이 : 원하는 시점 프레임<br>
+```html
+    @keyframes ball {
+        0%{
+
+        }
+        50%{
+
+        }
+        100%{
+
+        }
+    }
+```
+3. 애니메이션 요소 설정
+    + animation-name에서 정희한 이름
+    + animation-duration에 소요시간 지정
+    + animation-iteration-count에 반복횟수 지정(infinite : 무한 반복)
+```html
+    name{
+        animation-name : ball;
+        animation-duration : 5s;
+        animation-iteration-count : infinite;
+    }
+```
+
+### animation-timing-function
+transintion-timing-function과 동일하게 사용 가능<br>
+default는 ease
+
+### animation-duration, animiation-delay
+동작 시간과, 지연시간 설정 (s,ms)
+
+### animation-iteration-count
+정수로 지정 가능, infinite는 무한 반복
+
+### animation-direction
+    속성        설명
+    normal      0에서 100%까지 진행
+    reverse     100%에서 0방향으로 진행
+    alternate   홀수번째는 normal, 짝수 번째는 reverse로 진행
+    alternate-reverse 홀수번쨰에는 reverse, 짝수 번째는 normal로 진행   
+
+### animation-fill-mode
+> 이해하기 복잡한 개념이므로 실습을 통해
+
+    none : 초기상태 => 0% => 100% => 초기상태
+    forward : 초기상태 => 0% => 100% => 100%
+    backwards : 0% => 0%=> 100%=> 초기상태
+    both : 0 => 0 => 100% => 100%
+
+### animation-play-state
+javascript와 사용해, 이벤트에 따라 해당 속성을 변경
+
+    paused : 중지 상태
+    running : 실행 상태
+
+### animation 단축 속성
+```html
+    animation : name duration timing-function delay iteration-count direction fill-mode play-state
+```
+
+# CSS transform
+: 요소의 회전, 크기 조절, 기울이기, 이동효과를 부여하는 함수 제공<br>
+
+키프레임 기반 설정은 제공하지 않으므로, 이를 위해서는 CSS animation, transtion과 함께 사용해야 한다.
+
+## CSS transform 사용법
+```html
+transform : tranform 함수;
+```
+CSS transform 함수로 요소 이동 및 변형시 x,y,z로 요소 변경을 설정 할 수 있다.
+
+### 주요 transform 함수
+
+    translate(x,y) : 위치를 x, y 이동
+    translateX(x) : x 이동
+    translateY(y) : y이동
+    scale(x,y) : 크기를 가로 x,세로 y배
+    scaleX(x) : 가로 x배
+    scaleY(y) : 세로 y배
+    skew(x-angle,y-angle) : 가로 x, 세로 y 만큼 기울임
+    skewX(x-angle) : 가로 기울임
+    skewY(y-angle) : 세로 기울임
+    rotate(angle) : 주어진 각만큼 회전
+
+## transform-origin 속성
+: 요소의 기준점을 변경하는 속성<br>
+scale(),rotate(),translate(),skew() 동작은, 기본적으로 해당 요소의 중심 기준으로 동작 <br>
+
+사용법
+```html
+    tranform-origin : x축 | y축 | z축
+```
+
+# CSS float 속성
+웹페이지에서 텍스트와 함께 이미지 배치를 위해 고안되었지만, 수평 정렬을 위해서도 사용
+
+* 수평 정렬을 위해 float,flexbox,grid를 사용 할 수 있음
+    + float는 본래 수평 정렬을 위한 속성이 아니고 복잡하고 특별한 룰셋을 가지고 있어, 기본 동작과 달라보이는 케이스가 나타날 수 있다.
+    + flexbox와 grid는 호환성 이슈로 사용하기 어려웠지만, flexbox의 경우는 호환성이 해결된 수준
+    + flexbox,grid는 수평 정렬/배치를 위해 고안되었다.
+
+## float 속성
+
+    none: 떠있지 않게 함
+    right : 요소를 오른쪽으로 이동
+    left : 요소를 왼쪽으로 이동
+
+## clear 속성
+:float을 해제하는 속성
+    none : 양쪽 float를 사용 할 수 있음
+    right : 왼쪽 float 사용 해제
+    left : 오른쪽 float 사용 해제
+    both : 양쪽 float 사용 해제
+
+## 정렬과 float 속성
+
+* 수평정렬할 요소들을 left로 설정시 왼쪽 정렬, right로 설정시 오른쪽 정렬
+* 오른쪽 정렬의 경우, 먼저 설정한 요소가 오른쪽 끝에 놓여짐
+
+## float 정렬의 기본 문제점
+float의 부유성때문에 float 속성이 사용되지 않은 요소와 곂치는 문제가 있다.
+### 문제해결을 위해 clearfix class안에 float 요소를 사용
+```html
+.clearfix:after{
+    content: "";
+    claer : both;
+    display : block;
+}
+```
+
+## float 속성의 특성
+* float 속성으로 설정한 요소는 기본적으로 display 특성을 block 특성으로 변경
+    + display 가 flex 등으로 설정되어 있는 경우 제외
+* block 특성을 가진 요소는 기본 width가 100%인 반면 float 속성이 설정된 요소는 요소의 크기만큰 width가 설정된다.
+* float 설정시, float가 적용된 요소에 content가 있을 경우, 해당 content의 width, height가 다음 요소의 content에 영향을 줌
+
+# CSS 상속
+
+## 상속과 CSS 우선순위
+요소간에는 부모, 자식관계가 있고, 상속은 부모 요소의 속성을 자식요소가 물려받는 것을 의미
+
+
+## 주요 속성 별 상속 여부
+* 속성별로 상속유무가 다르다.(태그별 상속유무도 다름)
+* 상속가능 : text-align, line-heignt, color, font, visibility, opacity
+* 상속 불가능 : width, height, margin, padding, border, display, box-sizing, background, vertical-align, position, z-index, overflow, float
+
+## 강제 상속 설정
+부모의 속성중 상속되지 않는 속성을 상속하고 싶을떄는, 자식 요소의 해당 속성값을 inherit로 설정하면 된다.
+
+## CSS 우선순위와 Cascadinxg
+
+다양한 CSS 속성 적용과 상속으로 인해, 특정 요소에 어떤 속성값이 적용될지 결정해야함
+
+### Cascading 기본 규칙
+
+**중요도 : CSS를 어디에 선언했는지에 따라 우선순위가 달라진다.** 
+1. ```head``` 태그 안의 style 요소
+2. ```head``` 태그 안의 style 태그안의 @import 문
+3. ```<link>```로 연결된 CSS 파일
+4. ```<link>```로 연결된 CSS 파일 안의 @import 문
+
+**명시도 : 대상을 명확하게 지정할 수록 높은 우선순위**
+**선언순서 : HTML 문서상 뒤에 나오는 CSS가 높은 우선순쉬**
+
+### CSS 우선순위 기본 규칙
+> 중요도, 선언 순서보다는 명시도가 우선순위에 많은 영향을 미친다.
+
+1. HTML 문서상 뒤에 나올수록 높은 우선순위
+2. 기본 우선순위(높은 순으로 정렬)
+    * 속성값뒤에 !important를 기대할 경우 (최우선)
+    * 태그 안에 속성으로 기재한 style에 의해 설정된 속성 (1000점)
+    * id로 선택한 CSS Selector 에서 적용된 속성 (100점)
+    * class,html 속성, pseudo class 로 선택한 CSS Selector에서 적용된 속성(10점)
+    * 태그 또는 가상 요소 셀렉터로 선택한 CSS Selector에서 적용된 속성(1점)
+> !important > Inline Style > id > class > tag
+> !important, 태그안의 style은 현업에서는 사용을 제한한다.(복잡도 문제)
+
+# CSS media query와 responsive Layout
+
+## Reactive Web
+: 접속기기에 따라 자동으로 화면이 조정되는 Webpage
+
+* 기존에는 bootstrap 기반으로 반응형 웹을 자동 구현하거나, 웹 퍼블리셔가 처리
+* 풀스택이 되어, 그럴싸한 웹서비스를 구현하지 위해서 개발 단계에서 반응형 처리 필요 
+
+## 적응형웹 과 반응형 웹
+* 적응형 웹 : 사용자의 환경(mobile,pc)에 따라 다른 페이지를 보여줌
+    + ex) naver.com 과 m.naver.com
+* 반응형 웹 : 환경에 관계없이 동일한 페이지를 보여주지만, 화면 사이즈에 따라 조정
+
+
+## Pixel 과 Viewport
+* Pixel : Picture Element(화소). 컴퓨터 화면을 구성하는 최소 단위
+* Viewport : 사용자 환경에 해상도가 달라져도 동일한 화면을 구성하기 위해 도입된 개념으로 화면상의 표시 영역을 의미. 
+* meata viewport 설정 : viewport 에 입력한 width길이에 맞춰 웹 페이지표시 (default 980px)<br>
+width에 device-width를 입력하여 기기의 너비값에 맞추어 화면 출력
+### PPI(Pixels Per Inch) 
+: 픽셀 밀도, 또는 화소 밀도라고 불리며 단위 면적당 화소수를 나타냄
+
+### 주요 속성
+    width : vieport 너비(px)
+    height : viewport 높이(px)
+    initial-scale : viewport 초기 배율(default:1.0)
+    user-scale : 사용자의 웹페이지 확대-축소 가능여부(default:yes)
+    maximum-scale : 최대 배율
+    minimun-scale : 최소 배율
+
+## 레이아웃 과 미디어 쿼리
+Layout : 각 페이지 구성 요소를 페이지 내에 효과적으로 배열하는 작업
+
+### 반응형 레이아웃
+: HTML5에 정의된 Semantic tags 기반으로 일반 레이아웃 기반 반응형 레이아웃
+
+### 미디어 쿼리
+: 반응형 레이아웃 구현을 위해 사용되는 서로 다른 미디어 타입에 대응하기 위한 기능<br>
+CSS3의 가장 큰 추가기능 중 하나
+> @media를 사용하는 것이 핵심
+### 미디어 쿼리 기본 문법
+```html
+    @media media-type and (media-feature-rule) {
+
+    }
+```
+* media-type : all 또는 screen 사용
+    + all : 전체
+    + print : 프린트 화면
+    + screen : 브라우저 화면
+    + speech : 음성
+* media-feature-rule : media 조건, 주로 min/max-width, orientation 정도 사용
+    width/height : min-max 최소/최대 너비,높이
+    device-width : 디바이스의 물리적 너비
+    device-height : 디바이스의 물리적 높이
+    orientation : 디바이스 방향(가로:landscape, 세로:portrait)
+    aspect-ratio : viewport의 종횡비
+* 논리 연산자(and,not,only)를 붙여 복잡한 조건을 만들 수 있음
+    + only : 구형 브라우저 지원을 위해 only screen and 처럼 쓰면 좋음
+    + comma(,) : 여러 미디어 조건 나열을 위해 사용
+
+### 참고 해상도
+
+* 320px~480px : 스마트폰
+* 481px~768px : 태블릿
+* 769ox~1024px : 저해상도 노트북
+* 1025px~1200px : 데스크탑
+* 1201px~ : 고해상도 데스크탑 및 TV
+>>>>>>> 6425a9000c821fc514d9e0f913307bfe28ed585f
