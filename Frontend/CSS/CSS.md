@@ -906,6 +906,34 @@ flexbox의 구성 요소
     align-items : 교차 축 기반 정렬 방법을 설정(행마다 적용)
 
 * display
-    flex: flex container 정의 (container간 수직 정렬)
-    inline-flex : inline 특성의 flex container 정의(container 간 수평 정렬)
-    
+    + flex: flex container 정의 (container간 수직 정렬)<br>
+    + inline-flex : inline 특성의 flex container 정의(container 간 수평 정렬)
+* flex-direction : 정렬 방법 설정
+    + row : 왼쪽 수평 정렬
+    + row-reverse : 오른쪽 수평 정렬
+    + column : 수직 정렬
+    + cloumn : 아래부터 수직 정렬
+* flex-wrap : flex-item들의 행 배치
+    + nowrap : flex item 들을 개행하지 않고, 항행에 배치(default)
+    + wrap : flex item들의 너비 합이 flex container 너비보다 클 경우 개행
+    + wrap-reverse : flex item들의 너비합이 container 너비보다 클 경우 역방향으로 개행하여 표시
+* flex-flow : direction과 wrap 속성의 단축 프로퍼티
+* justify-content : 주 축 기반 수평 병렬 방식 설정
+    + flex-start : 왼쪽부터 수평정렬
+    + flex-end : 오른쪽 수평 정렬ㄹ
+    + center : 가운데 수평 정렬
+    + space-between : 좌우끝에 item 배치후 내부 item들은 균등 간격으로
+    + space-around : container 내부에 균등간격으로 배치
+* align-items 과 align-content
+    + align-items : 교차축 기반 정렬 (각 행 마다 적용)
+        - flex-start : 영역 시작점에 정렬
+        - flex-end : 영역 끝점에 정렬
+        - center : 각 행의 교차 축 가운데 정렬
+        - baseline : 각 행의 문자 기준선 정렬
+    + align-content : 교차 축 기반 정렬 (복수의 행을 하나의 그룹처럼 적용)
+        - stretch : default 설정. 교차축을 채우기 위해 자동 조정
+        - flex-start : 축 시작점에 정렬
+        - flex-end : 축 끝점에 정렬
+        - center : 전체 container의 가운데에 정렬
+        - space-between : 좌우끝에 item 배치후 내부 item들은 균등 간격으로
+        - space-around : container 내부에 균등간격으로 배치
