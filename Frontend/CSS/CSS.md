@@ -529,7 +529,6 @@ block과 inline 특성 모두를 가짐
     ellipsis : 말줄임표로 표시
 > 이외의 값은 호환성이 떨어져 사용성이 낮음
 
-<<<<<<< HEAD
 # 위치 관련 속성
 
 ## position 속성
@@ -602,7 +601,6 @@ cubic-bezier() 함수에 대한 이해 필요<br>
 ```html
     transition : property duration function delay
 ```
-=======
 # CSS animation
 transition 과 유사하게, CSS 스타일을 부드럽게 전환
 
@@ -877,4 +875,37 @@ CSS3의 가장 큰 추가기능 중 하나
 * 769ox~1024px : 저해상도 노트북
 * 1025px~1200px : 데스크탑
 * 1201px~ : 고해상도 데스크탑 및 TV
->>>>>>> 6425a9000c821fc514d9e0f913307bfe28ed585f
+
+# CSS flexbox
+
+## 수평 정렬 방법과 flexbox (Flexible Box)
+* 기존에는 float 과 position 속성을 기반으로 Layout 작업을 실행
+* CSS3에서는 레이아웃을 위해 flexbox 속성을 제공하였으나, 그동안은 IE가 지원을 하지않아 사용이 어려웠으나 현재는 많은 개선이 이루어져 flexbox까지 사용이 가능
+* grid의 경우는 호환성 문제가 있어 조심해햐할 필요가 있음
+
+### flexbox의 이해
+
+**div.item을 수평으로 정렬하려면?**
+1. item 클래스에 inline-block을 display 속성으로 지정. 이 경우 작성 방식에 영향을 미침(줄 바꿈, 탭)
+2. float 사용. 이 경우 부모 요소 위에 존재하게 되므로, 형제 요소와 곂칠 수 있음 => (clearfix로 해결)
+3. flexbox를 사용하면, 비공식적인 방법 없이 깔끔하게 요소들을 수평정렬 할 수 있음
+
+## flexbox container 관련 속성
+flexbox의 구성 요소 
+* 상위 부모 요소인 flex container
+* 하위 자식 요소인 flex item 
+=> 수평 정렬할 요소 : flex item, 정렬할 요소를 감싸는 부모요소 : flex container
+
+### flex container 에서 설정 가능한 속성
+    display : flex container 정의
+    flex-direction : flex item들의 주 축 방향 설정
+    flex-wrap : flex item들을 1행 또는 복수의 행으로 배치하는 설정
+    flex-flow : flex-direction과 flex-wrap을 한번에 설정하는 단축 설정
+    justify-content : 주 축 기반 정렬 방법 설정
+    align-content : 교차축 기반 정렬 방법 설정(2행 이상)
+    align-items : 교차 축 기반 정렬 방법을 설정(행마다 적용)
+
+* display
+    flex: flex container 정의 (container간 수직 정렬)
+    inline-flex : inline 특성의 flex container 정의(container 간 수평 정렬)
+    

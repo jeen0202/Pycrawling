@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .container {
+            border : 1px solid red;
+            display : flex
+        }
+        .item {
+            border : 1px solid blue;
+            width : 100px;
+            height : 100px;
+            border-radius : 10px;
+            
+        }
+        .clearfix ::after {
+            content: '';
+            clear : both;
+            display : block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container clearfix">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    <div>
+</body>
+</html>
