@@ -905,26 +905,26 @@ flexbox의 구성 요소
     align-content : 교차축 기반 정렬 방법 설정(2행 이상)
     align-items : 교차 축 기반 정렬 방법을 설정(행마다 적용)
 
-* display
+### display
     + flex: flex container 정의 (container간 수직 정렬)<br>
     + inline-flex : inline 특성의 flex container 정의(container 간 수평 정렬)
-* flex-direction : 정렬 방법 설정
+###  flex-direction : 정렬 방법 설정
     + row : 왼쪽 수평 정렬
     + row-reverse : 오른쪽 수평 정렬
     + column : 수직 정렬
     + cloumn : 아래부터 수직 정렬
-* flex-wrap : flex-item들의 행 배치
+### flex-wrap : flex-item들의 행 배치
     + nowrap : flex item 들을 개행하지 않고, 항행에 배치(default)
     + wrap : flex item들의 너비 합이 flex container 너비보다 클 경우 개행
     + wrap-reverse : flex item들의 너비합이 container 너비보다 클 경우 역방향으로 개행하여 표시
-* flex-flow : direction과 wrap 속성의 단축 프로퍼티
-* justify-content : 주 축 기반 수평 병렬 방식 설정
+### flex-flow : direction과 wrap 속성의 단축 프로퍼티
+### justify-content : 주 축 기반 수평 병렬 방식 설정
     + flex-start : 왼쪽부터 수평정렬
     + flex-end : 오른쪽 수평 정렬ㄹ
     + center : 가운데 수평 정렬
     + space-between : 좌우끝에 item 배치후 내부 item들은 균등 간격으로
     + space-around : container 내부에 균등간격으로 배치
-* align-items 과 align-content
+### align-items 과 align-content
     + align-items : 교차축 기반 정렬 (각 행 마다 적용)
         - flex-start : 영역 시작점에 정렬
         - flex-end : 영역 끝점에 정렬
@@ -937,3 +937,49 @@ flexbox의 구성 요소
         - center : 전체 container의 가운데에 정렬
         - space-between : 좌우끝에 item 배치후 내부 item들은 균등 간격으로
         - space-around : container 내부에 균등간격으로 배치
+## flexbox item 관련 속성
+    order : item 배치 순서 설정
+    flex-grow : item 너비 증가 비율 설정
+    flex-shrink : 너비 축소 비율 설정
+    flex-basis : 기본 너비 설정 (공간 분배 이전)
+    flex : grow, shrink, basis의 단축 속성
+    align-self : container의 설정보다 우선해서, 개별 item 수직 정렬 방법 설정
+
+### order
+: flex item 배치 순서 설ㅈ어
+
+* default 값은 0
+* order 값이 낮은 순서대로 배치
+
+### flex-grow
+: flex iem 너비 증가 비율 설정
+
+동일한 flex-grow 값을 가진 item 들은 동일한 너비를 가지며, flex-grow 값이 다를경우<br>
+
+```해당 flex item의 grow 값/ 전체 flex item의 grow 총합```
+
+비율로 너비 조정(너비 조정 속성이 많이 때문에 정확하게 떨어지지는 않는다.)
+
+### flex-shrink
+: flex 너비 축소 비율 설정
+
+* defalut 값은 0
+* shrink 값이 동일하면, 동일한 비율로 container안에서 축소
+* shrink 값이 다르면, item의 shrink 값/ shrink값의 전체 합 비율로 축소
+
+### flex-basis
+flex item 기본 너비 설정
+
+### flex
+: flex-grow, flex-shrink, flex-basis 속성의 단축 속성
+
+### align-self
+container 레벨의 수직 정렬 방법보다 우선하셔 flex item의 수직 정렬 방법을 설정<br>
+align-content/align-items와 동일한 속성값으로 정렬 가능
+```html
+align-self : flex-start | flex-end | center | baseline | stretch
+```
+
+**참고 링크**
+https://www.outpan.com/app/1b970b008f/flexbox-playground
+https://flexboxfroggy.com/
