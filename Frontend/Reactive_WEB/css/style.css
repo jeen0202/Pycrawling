@@ -7,6 +7,27 @@ body {
     color : #3f464d;
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';    
 }
+a {
+    all : unset;
+
+}
+a:link {
+    text-decoration : none;
+    color : #3f464d;
+}
+a:visited{
+    text-decoration: none;
+    color : #3f464d;
+}
+a:active{
+    text-decoration: none;
+    color : #3f464d;
+}
+a:hover{
+    text-decoration: none;
+    color : #3f464d;
+    
+}
 
 .inner {
     width : 100%;
@@ -37,6 +58,10 @@ header {
     font-weight : bold;
     font-size : 1.2rem;
 }
+.head-container a:hover{
+    color : #2186c4;
+    cursor : pointer;
+} 
 .head-container .head-blog{
     font-weight : bold;
     font-size : 1.2rem;
