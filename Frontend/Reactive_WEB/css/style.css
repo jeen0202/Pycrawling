@@ -33,7 +33,7 @@ a:hover{
     width : 100%;
     height : 100%;
     margin : 0 auto;
-    
+    padding : 0 2rem;
 }
 
 header {
@@ -66,6 +66,45 @@ header {
     font-weight : bold;
     font-size : 1.2rem;
 }
+section {
+    width : 100%;
+    background-color: #fff;    
+    position : relative;
+}
+.main {
+    height : 360px;
+    background-image : url("../img/banner_sample.jpg");
+    background-size: cover;
+    background-position: center 10%;
+    background-repeat: no-repeat;
+    z-index: 1;
+
+}
+.main-container {
+    width : 100%;
+    height : 100%;
+    background-color: rgb(47,48,89);
+    opacity: 0.8;
+    z-index: 2;
+    margin-top : 50px
+}
+.title-container{
+    padding-top : 100px;
+    padding-bottom : 100px;
+}
+.title {
+    font-size : 2rem;
+    font-weight : bold;
+    color : #fff;
+    margin-bottom : 0.8rem;
+}
+.message{
+    color: #fff;
+    font-size : 1.4rem;
+    line-height : 2rem;
+    
+}
+
 @media only screen and (min-width : 1200px) {
     .inner {
         max-width : 1200px;
