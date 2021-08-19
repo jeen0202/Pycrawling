@@ -134,3 +134,114 @@ else{
 }
 ```
 ```Javascript에서는 switch/case 문이 지원된다```
+
+## 함수
+기본문법
+```js
+function 함수이름(파라미터){
+    실행코드
+    return 반환값
+}
+```
+
+### 화살표(Arrow, => ) 함수
+: 함수 선언을 보다 간단하게 하기 위해 ES6에서 고안된 방법<br>
+익명 함수로 사용되며, 이를 호출하기 위해 변수에 대입하는 경우가 많음
+```js
+let func = (parameter) => expression
+```
+위와 같은 일반 함수식
+```js
+let func = function(parameter){
+    return expression;
+}
+```
+화살표 함수를 사용한 단축 문법
+* function 키워드 생략
+* 파라미터가 하나일 경우 괄호() 생략
+* 함수 코드가 단일 라인일 경우, 코드 블록{} 및 return 생략
+```js
+//예시
+let func1 = () => "Hello Arrow!";
+```
+
+## 객체
+: JS의 객체는 대게 Property와 Method로 이루어져 있다.
+    javascript : Property와 Method 
+    Python : Attribute와 Method
+    CSS : Property와 Property 값
+    HTML : Attribute와 Attribute 값
+
+### Property와 Method
+* Property는 Key-Value로 구성
+* Key는 문자열 또는 Symbol 값으로 구성, Value는 해당 Key에 저장하고자 하는 데이터
+* Method는 객체가 보유하고있는 함수
+* JS 객체 생성 방법
+    1. 객체 리터럴 방ㅅ힉
+    2. new Object() 생성
+    3. 생성자 함수로 생성
+
+### 객체 리터럴 생성 방법
+> JS는 프로토타입 기반 객체 지향 언어이기 때문에, 객체 생성방식이 클래스 기반 문법과 다르다.
+> 이를 객체 리터럴이라고 부른다.
+> ES6에 와서는 클래스 기반 객체 생성 문법도 지원하고 있다.
+
+* 객체 생성 방법 : {} 안에 Key:Value 로 필요한 프로퍼티를 정의
+    + JSON, Python의 dic 자료형과 유사한 측면이 있음
+```js
+const 객체명 = {
+    Key1: Value1,
+    Key2: Value2,
+    ...
+};
+```
+* const를 사용하여 선언
+* const 선언시 객체이름은 다른 객체로 재할당 될 수 없음
+    + 객체 내부의 Property, Method 는 변경 가능
+* 객체 주소값이 변경 될 수 있다면 const 대신 let을 사용
+* 빈 객체 선언후, Property와 Method 추가 가능
+
+**객체리터럴사용시 주의사항**
+* this 키워드
+    + this 키워드는 자신의 객체를 가르킨다.
+
+**Getter 와 Setter**
+* 클래스 기반 문법에서는 내부 변수를 외부에서 어느 범위까지 접근할 수 있는지 지정 문법 제공
+    + public, private, proteceted...
+    + 정보 은닉 및 캡슐화를 위해 사용
+* JS 객체 리터럴 에서는 getter와 setter를 제공
+    + 접근자 Property라고 불리며 접근제어를 위해 사용한다.
+* getter는 선언시 파라미터가 없어야하고, setter는 파라미터가 한개이상 있어야 한다.
+```js
+get prop() {
+    ...
+}
+set prop(param) {
+    ...
+}
+```
+### new Object 생성 방법
+> 객체 리터럴, 생성자를 권장하므로 자주 쓰이지는 않는다.
+
+```js
+const 객체명 = new Object();
+```
+
+### 생성자 함수로 생성하는 방법
+```js
+function 객체명(param1,param2){
+    this.프로퍼티명 = value;
+}
+
+const 객체명 = new 객체명(param1,param2);
+```
+
+### 프로토타입
+: 생성자 함수에 프로퍼티 또는 메서드 정의 가능
+```객체이름.prototype.프로퍼티명=....```와 같이 사용 가능
+```js
+객체명.prototype.프로퍼티명 = 프로퍼티값;
+객체명.prototype.메서드명 = function() {
+    ....
+}
+```
