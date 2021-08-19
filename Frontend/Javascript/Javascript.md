@@ -88,3 +88,49 @@ typeof 변수명
 ```js
 Symbol ((description));
 ```
+
+### Data type 변환
+1. Number() : Number 형으로 변환
+```js
+Number("1.2")
+```
+2. parseInt() : Number type 정수형으로 변환
+```js
+parseInt("1.2")
+```
+3. parseFloat() : Number type 실수형(부동소수점)으로 변환
+```js
+parseFloat("1.2")
+```
+4. String() : 문자형으로 변환
+```js
+String(1.2)
+```
+5. Boolean() : 논리자료형으로 변환
+```js
+Boolean(-1)
+```
+
+### 동등 연산자와 일치 연산자
+동등연산자(==, !=) : 관대한 비교방식으로 값이 같은지 비교
+일치연산자(===, !==) : 염격한 연산자로, 값과 자료형이 같은지 확인
+
+### 논리 연산자
+    ! : NOT
+    && : AND
+    || : OR
+
+### 문자 연산자
+: +를 사용하여 문자열을 합칠 수 있다.
+
+### 조건문
+코드 블록({}) 으로 내부 실행문을 구분
+```js
+if (조건) {
+    실행부;
+}
+else{
+    실행부;
+}
+```
+```Javascript에서는 switch/case 문이 지원된다```
