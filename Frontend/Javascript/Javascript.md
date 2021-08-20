@@ -245,3 +245,74 @@ const 객체명 = new 객체명(param1,param2);
     ....
 }
 ```
+
+## Javascript ES6와 Class
+* ES6에서 객체 지향 문법과 유사한 class 키워드 기반 객체 생성 문법이 표준화 됨
+### 클래스 정의
+```js
+class 클래스명 {
+
+}
+```
+**constructor() : 생성자 함수**
+* 클래스 내부에서 작성
+```js
+    class 클래스명 {
+        constructor() {
+
+        }
+    }
+```
+* 정의된 클래스는 new 클래스명()을 통해 객체로 생성될 수 있음
+* 클래스 프로퍼티는 생성자 내부에서 this 키워드로 선언 될 수 있음
+* 객체 생성시 인자 정의는 생성자에서 할 수 있음
+* 일반 객체 지향 문법과 유사한 상속을 지원함
+    + extends를 사용하여, 상속받을 클래스를 선언할 수 있음
+    + 자식 클래스에서는 super() 키워드로 부모의 생성자를 호출
+```js
+class Super {
+    constuctor (파라미터1) {
+        
+    }
+}
+class Sub {
+    constructor(파라미터2){
+        super(파라미터1)
+    }
+}
+```
+* 객체지향의 다형성도 지원된다.
+
+**hasOwnProperty 사용법**
+* 클래스명.prototype.프로퍼티 = 프로퍼티 값 으로도 클래스 외부에서 프로퍼티 추가 가능
+* 클래스 내부에 선언한 프로퍼티임을 확인하기위해 hasOwnProperty(프로퍼티명)을 사용
+
+## javascript의 반복문
+### for문
+```js
+for(초기값,조건,증분){
+
+}
+```
+**for ...of 문**
+: for(배열에서 불러올 아이템 of 배열)로 작성
+```js
+for(let item of 배열)
+{
+    item으로 배열의 변수 순차 호출
+}
+```
+**객체와 for문**
+* for ... in 으로 객체의 키를 반복할때마다 가져올 수 있음
+    + Object.entries(), Object.keys(), Object.values()를 사용하여, Key-value를 기반으로 사용하는 것과 유사한 기능을 사용할 수 있다.
+    - Object.entries() : Key-Value로 이루어진 프로퍼티셋의 리스트를 반환
+    - Object.keys() : 프로퍼티의 key 리스트 배열 번환
+    - Object.values() : 프로퍼티의 value 리스트 배열 반환
+### While 문
+```js
+while(조건){
+    조건 만족시 반복
+    break; // 반복문 종료
+    continue; // 하위 실행문 생략
+}
+```
