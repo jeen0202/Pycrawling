@@ -201,11 +201,11 @@ const 객체명 = {
 * 객체 주소값이 변경 될 수 있다면 const 대신 let을 사용
 * 빈 객체 선언후, Property와 Method 추가 가능
 
-**객체리터럴사용시 주의사항**
+**객체리터럴사용시 주의사항**<br>
 * this 키워드
     + this 키워드는 자신의 객체를 가르킨다.
 
-**Getter 와 Setter**
+**Getter 와 Setter**<br>
 * 클래스 기반 문법에서는 내부 변수를 외부에서 어느 범위까지 접근할 수 있는지 지정 문법 제공
     + public, private, proteceted...
     + 정보 은닉 및 캡슐화를 위해 사용
@@ -254,7 +254,7 @@ class 클래스명 {
 
 }
 ```
-**constructor() : 생성자 함수**
+**constructor() : 생성자 함수**<br>
 * 클래스 내부에서 작성
 ```js
     class 클래스명 {
@@ -283,7 +283,7 @@ class Sub {
 ```
 * 객체지향의 다형성도 지원된다.
 
-**hasOwnProperty 사용법**
+**hasOwnProperty 사용법**<br>
 * 클래스명.prototype.프로퍼티 = 프로퍼티 값 으로도 클래스 외부에서 프로퍼티 추가 가능
 * 클래스 내부에 선언한 프로퍼티임을 확인하기위해 hasOwnProperty(프로퍼티명)을 사용
 
@@ -294,7 +294,7 @@ for(초기값,조건,증분){
 
 }
 ```
-**for ...of 문**
+**for ...of 문**<br>
 : for(배열에서 불러올 아이템 of 배열)로 작성
 ```js
 for(let item of 배열)
@@ -332,44 +332,44 @@ while(조건){
 
 ### 다양한 배열관련 기능 (함수)
 
-**push**
+**push**<br>
 배열끝에 아이템 추가
 
-**pop**
+**pop**<br>
 배열 끝에있는 아이템 반환 후 해당 아이템 제거
 
-**shift**
+**shift**<br>
 배열의 첫번째 아이템을 제거하고, index 번호를 떙긴다.
 
-**concat**
+**concat**<br>
 두 배열 병합
 
-**join**
+**join**<br>
 아이템 사이에 특정 문자열을 끼워넣어 하나의 문자열로
 
-**reverse**
+**reverse**<br>
 현재 배열을 역순으로 배치
 
-**slice**
+**slice**<br>
 배열의 일부분 반환 
 
-**forEach**
+**forEach**<br>
 for문을 대체하여, 간단하게 배열의 각 아이템을 호출
 
-**map**
+**map**<br>
 배열의 각 아이템에 함수를 적용하여, 새로운 배열을 반환
 
-**indexof**
+**indexof**<br>
 배열에서 지정한 위치의 데이터 위치값
 
-**findIndex**
+**findIndex**<br>
 배열 아이템이 객체일 경우, 객체에서 지정한 데이터 위치를 검색하는 방법
 
 
-**find**
+**find**<br>
 지정한 데이터가 들어있는 객체를 반환
 
-**filter**
+**filter**<br>
 특정 조건을 만족하는 경우에 해당 아이템을 추출
 
 ## 자주 사용되는 JS 문법
@@ -390,7 +390,7 @@ let [fisrt,second,third,fourth] = myArray;
 
 ### 구조 분해 할당 문법 활용
 
-**변수값 swap**
+**변수값 swap**<br>
 ```js
 let a = 1;
 let b = 3;
@@ -404,7 +404,7 @@ funciton getData(){
 }
 ```
 
-**문자열 split**
+**문자열 split**<br>
 * split()
 : default값이 없으므로, 명시적으로 인자를 넣어주어야 한다.
 
@@ -454,19 +454,19 @@ var a = 20;
 2. Function : 함수 내부
 3. Block : {} 괄호로 이루어진 범위
 
-**전역 scope**
+**전역 scope**<br>
 : 블록이나 함수 안에서 선언되지 않고, 외부에서 선언되어 모든 코드에 포함가능
 
-**Block Scope**
+**Block Scope**<br>
 { } 괄호 내부의 영역을 의미한다.<br>
 Block내부에서 let, const 키워드로 선언된 변수는 Block Scope에 속한다.
 
-**var키워드와 함수 scope**
+**var키워드와 함수 scope**<br>
 var 키워드는 함수 scope를 가진다.<br>
 block 안에서 var키워드로 선언된 변수는 block 외부에서도 유효하며, 이를 block scope와 분리하여 함수 scope로 분리한다.
 
 
-**전역변수와 지역변수**
+**전역변수와 지역변수**<br>
 
 동일한 이름을 가진 전역변수와 지역변수가 있으면, 지역변수를 우선 사용
 
@@ -501,6 +501,48 @@ setTimeout(function, milliseconds)
     - 함수의 반환값으로 함수를 전달 가능
 * 비동기식으로 처리되는 함수에 영향을 받는 함수를 callback으로 넣어 문제 해결
 
-**Callback 지옥**
+**Callback 지옥**<br>
 callback 함수가 너무 많이 반복될 경우 함수의 작성이 너무 복잡해 질수있다.<br>
 이러한 문제의 해결을 위해 Promise, async/await등의 문법이 추가되었다.
+
+## Promise
+: 비동기식 처리를 위한 콜백함수의 단점을 극복하기 위해 ES6에서 공식적으로 추가된 문법<br>
+단순화 하면 Promise객체를 생성하여 then으로 실행하는 방식.
+
+    1. new로 Promise 객체 생성
+    2. Promise 객체 내부에서 executor함수가 내부적으로 실행되고, resolve, 실패시 reject 를 비동기 식으로 실행
+
+ ### Promise의 3가지 상태
+    1. Pending(대기) : 비동기 처리가 아직 실행되지 않은 단계
+    2. Fullfilled(이행): 비동기 처리가 성공적으로 완료된 상태
+    3. Rejected(실패) : 비동기 처리가 실패한 상태
+
+### then 메서드
+: Promise객체에서 resolve, reject 를 정의하고, promise 코드를 실행해주는 메서드
+
+### catch 메서드
+: promise 실행중 예외사항 처리를 위한 메서드<br>
+failureCallback가 정의되어있지 않을경우, reject시에 호출됨
+
+**chaining**<br>  
+* then과 catch 메서드도 함께 연결해서 실행 가능
+
+### throw
+* 사용자 정의 예외를 던질 떄 사용
+    - catch block가 있으면 전달되고, 그렇지 않으면 프로그램 종료
+```js
+throw new Error('메시지');
+```
+
+**chaning과 catch**<br>
+- 일반적으로 catch를 chaining 맨 마지막에 추가해서, 에러 케이스를 간결히 핸들링
+
+### finally
+: Promise의 마지막에 해당 함수를 실행
+
+### Promise.all
+* 동기화 처리할 Promise를 묶어서 한번에 실행
+* 다중 함수가 모두 실행 완료된 후, then구문 실행
+
+### Promise.race
+* 여러 함수중 가장먼저 실행된 함수 종료 이후에 then 구문 실행
