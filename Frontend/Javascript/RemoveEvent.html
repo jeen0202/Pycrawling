@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      div {
+        width: 100px;
+        height: 100px;
+        border: 2px solid #f2b441;
+        border-radius: 10px;
+      }
+      .box1 {
+        background: #f2d541;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box1">ease</div>
+
+    <script>
+      const makeRed = () => box.style.background = "red";
+      const makeYellow = () => box.style.background = "#f2d541";
+
+      const box = document.querySelector(".box1");
+      box.addEventListener("mouseover", makeRed);
+      box.addEventListener("mouseout", makeYellow);
+      box.addEventListener("click", () => {
+        box.removeEventListener("mouseover", makeRed);
+        box.removeEventListener("mouseout", makeYellow);
+      });
+
+    </script>
+  </body>
+</html>

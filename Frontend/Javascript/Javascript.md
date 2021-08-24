@@ -612,3 +612,40 @@ document 객체를 통해 HTML/CSS 수정 가능<br>
     element.nextElementSibling : 현재 요소의 다음 형제 요소
     element.previousElementSibling : 현재 요소의 이전 형제 요소
     element.children : 자식 요소 (배열 형태)
+
+## 이벤트
+: 웹페이지에 발생하는 이벤트를 의미<br>
+
+    이벤트 이름         설명
+    load                로드 완료
+    resize              윈도우 크기 변경
+    keydown             키 입력
+    keyup               키에서 손을 떼었을때
+    change              변동이 있을떄
+    click               클릭
+    focus               포커스를 얻었을때
+    mousedown           마우스 클릭
+    mouseout            마우스가 객체 밖으로 나갔을경우
+    mouseover           마우스가 객체 위로 올려졌을때
+    mousemove           마우스가 움직였을때
+    mouseup             마우스에서 손을 뗐을 때
+    select              option 태그 등에서 선택을 했을 때
+
+### 이벤트 등록 
+* addEventListener()를 통해 이벤트 등록
+> HTML과 JS의 역할을 분리하는 차원에서 onclick과 같이 태그의 속성으로 특정이벤트를 추가하는 방식을 지양한다.
+
+```js
+EventTarget.addEventListner(event type, function name)
+```
+### 이벤트를 통해 DOM 제어
+* function에 dom제어함수를 정의하여 이벤트 발생시 DOM 제어 
+
+### 이벤트 삭제
+* removeEventListner()를 통해 이벤트 삭제
+    - addEventListner와 동일한 양식 사용
+
+#### JQuery
+* Vanila JS 함수보다 손쉽게 사용이 가능
+* 라이브러리 로드가 필요하고 사이즈가 방대하여 최근에는 사용하지 않는 추세
+* $표시와 축약어를 통해 DOM 제어
