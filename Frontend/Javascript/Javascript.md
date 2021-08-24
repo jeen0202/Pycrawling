@@ -546,3 +546,69 @@ throw new Error('메시지');
 
 ### Promise.race
 * 여러 함수중 가장먼저 실행된 함수 종료 이후에 then 구문 실행
+
+## DOM(Document Object Model)
+* Document : 구조화된 데이터
+* DOM : 구조화된 문서를 객체로 표현하는 방식
+
+
+### 웹 브라우저의 동작 과정
+    1. HTML파일 가져오기
+    2. HTML파일 파싱하여 DOM tree 생성, CSS 정보를 파싱하여 CSSOM tree 생성
+    3. DOM/CSSOM tree 기반 Render tree 생성
+    4. Render tree 기반으로 Rendering
+
+### 웹브라우저 동작과정과 javascript
+* JS 코드를 head 태그 내의 script로 작성하면
+    - HTMl 코드를 기반으로 DOM 트리를 구성하기전에 script 태그를 마나면, JS 엔진에 제어권 이전
+    - JS 엔진이 해당 JS 코드 파일을 로드,실행
+    - 이후 HTML로 전환하여 HTML 코드를 읽고, DOM 트리 구성부터 진행
+* head 태그 내부의 JS
+    - 화면로딩이 느려질 수 있음
+    - DOM tree 구성 전에 JS가 실행되므로, DOM을 조작하는 JS는 에러유발
+* 결론
+    - JS코드는 body태그 종료 직전에 script 태그의 코드 파일 형태로 추가
+
+### window 와 document
+
+* window : 웹브라우저 객체(DOM, BOM, JS로 구성)
+* document : DOM 객체
+
+### windows와 BOM(Browser Object Model)
+* window : 브라우저 환경 전체 객체
+* BOM의 주요 객체
+    - navigator 객체 : 브라우저와 운영체제 정보 제공
+    - location 객체 : URL 관련 핸들링
+
+### document
+document 객체를 통해 HTML/CSS 수정 가능<br>
+원하는 HTML을 읽는다는 의미는 원하는 HTML을 찾는다는 의미
+
+#### 조작이 필요한 HTML 검색
+    document.getElementById(id) : id로 검색
+    document.getElementsByTagName(name) : 태그로 검색(반환값 : 배열)
+    document.getElementsByClassName(name) : class 이르믕로 찾기(반환값 : 배열)
+    document.querySelector(css selector) : CSS Selector로 첫번째 요소 검색
+    ducument.querySelectorAll(css selector) : CSS Selector로 전체 검색
+
+#### 검색된 HTML 요소 확인/수정
+    element.innerText = new html content : 요소 내용 확인/수정(태그 미포함)
+    element.innerHTML = new html content : 요소 내용 확인/수정(태그 포함)
+    element.attribute = new value : 요소의 attribute값 수정
+    element.style.property = new style : 요소의 CSS 프로퍼티 값 수정
+    element.setAttribute(attribute,value) : 요소의 attribute 값 설정
+* 메서드로 신규 attribute 설정 또는 기존 attribute 수정 가능
+
+#### HTML요소 생성/추가하기
+    document.createElement(tagName) : HTML 요소 생성
+    document.appendChild(element) : HTML 요소 추가
+
+#### HTML 요소 삭제/대체하기
+    document.removeChild(element) : HTML 요소 삭제
+    document.replaceChild(new,old) : HTML 요소 대체
+
+#### HTML 요소 탐색
+    element.parentNode : 부모 요소
+    element.nextElementSibling : 현재 요소의 다음 형제 요소
+    element.previousElementSibling : 현재 요소의 이전 형제 요소
+    element.children : 자식 요소 (배열 형태)
