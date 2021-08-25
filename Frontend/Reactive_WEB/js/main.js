@@ -1,6 +1,6 @@
 const backToTop = document.getElementById('backtotop')
 
-function checkScroll() {
+const checkScroll= ()=> {
     // 브라우저에서 Page를 얼마나 Scroll확인했는지 확인할 수 있는 함수
     let pageYOffSet= window.pageYOffset;
 
@@ -11,7 +11,7 @@ function checkScroll() {
     }
 }
 
-function moveBackToTop() {
+const moveBackToTop = () => {
     if (window.pageYOffset >0){
         window.scrollTo({
             top :0,
@@ -23,3 +23,67 @@ function moveBackToTop() {
 window.addEventListener('scroll',checkScroll);
 backToTop.addEventListener('click', moveBackToTop);
 
+
+function transformNext(event) {
+    const slideNext = event.target;
+    const slidePrev = slideNext.previousElementSibling;
+
+    const classList = slideNext.parentElement.parentElement.nextElementSibling;
+    let activeLi = classList.getAttribute('data-position');
+    const liList = classList.getElementsByTagName('li');
+    if (Number(activeLi) <0){
+        activeLi = Number(activeLi) + 260;
+
+        slidePrev.style.color ='#2f3059';
+        slidePrev.classList.add('slide-next-hover');
+        slidePrev.addEventListener('click',transformPrev);
+    if(Number(activeLi) === 0){
+        slideNext.style.color = "#cfd8dc";
+        slideNext.classList.remove('slide-next-hover');
+        slideNext.removeEventListener('click',transformNext);
+    }
+    }
+    classList.style.transition = 'transform 1s';
+    classList.style.transform = "translateX(" + String(activeLi) + "px)";
+    classList.setAttribute('data-position', activeLi);
+}
+
+function transformPrev(event) {
+    const slidePrev = event.target;
+    const slideNext = slidePrev.nextElementSibling;
+    
+    //관련 ul 선택
+    const classList = slidePrev.parentElement.parentElement.nextElementSibling;
+    let activeLi = classList.getAttribute('data-position');
+    const liList = classList.getElementsByTagName('li');
+    if (classList.clientWidth < (liList.length * 260 + Number(activeLi))) {
+        activeLi = Number(activeLi) - 260;
+        if (classList.clientWidth > (liList.length * 260 + Number(activeLi)))
+        slidePrev.style.color = "#cfd8dc";
+        slidePrev.classList.remove('slide-prev-hover');
+        slidePrev.removeEventListener('click',transformPrev);
+    }
+        slideNext.style.color ='#2f3059';
+        slideNext.classList.add('slide-next-hover');
+        slideNext.addEventListener('click',transformNext);
+
+    classList.style.transition = 'transform 1s';
+    classList.style.transform = "translateX(" + String(activeLi) + "px)";
+    classList.setAttribute('data-position', activeLi);
+}
+
+const slidePrevList = document.getElementsByClassName("slide-prev")
+
+for (let i = 0; i<slidePrevList.length; i++){
+    let classList = slidePrevList[0].parentElement.parentElement.nextElementSibling
+    let liList = classList.getElementsByTagName('li');
+    if(classList.clientWidth < (liList.length*260)){
+        slidePrevList[i].classList.add('slide-prev-hover')
+        slidePrevList[i].addEventListener('click', transformPrev)
+    } else{
+        //부모 요소에서 removeChild를 통해 삭제
+        const arrowContainer = slidePrevList[i].parentNode;
+        arrowContainer.removeChild(slidePrevList[i].nextElementSibling);
+        arrowContainer.removeChild(slidePrevList[i])
+    }
+}
