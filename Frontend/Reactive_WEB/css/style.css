@@ -225,7 +225,7 @@ section {
     justify-content: space-between;
     align-items: center;
 }
-.class-tyle {
+.class-type {
     font-size : 0.9rem;
     color : #949393
 }
@@ -236,14 +236,18 @@ section {
     background-color: #0d47a1;
 }
 .class-desc{
-    width : 100%;
+    width : 100%;    
+    color : #545e6f;
     margin-top : 1rem;
     
 }
+.class-desc:hover {
+    color : #2186c4;
+}
 .class-title {
     font-weight : bold;
-    color : #545e6f;
     width : 100%;
+    color : inherit;
     white-space: nowrap;
     overflow : hidden;
     text-overflow: ellipsis;
@@ -251,7 +255,7 @@ section {
 }
 .class-detail{
     font-size : 0.9rem;
-    color : #545e6f;
+    color : inherit;
     line-height: 1.5rem;
 }
 .roadmap-desc {
@@ -311,6 +315,12 @@ footer {
 #backtotop.show:hover{
     cursor: pointer;
     background-color: #2186c4;
+}
+ul li img:hover {
+    cursor : grab;
+}
+ul li img:active{
+    cursor : grabbing;
 }
 @media only screen and (min-width : 1200px) {
     .inner {
