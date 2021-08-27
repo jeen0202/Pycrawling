@@ -336,3 +336,33 @@ ul li img:active{
         display: none;
     }
 }
+
+@media only screen  and (max-width : 768px){
+    .class-skill{
+        display: none;
+    }
+    .class-container{
+        padding : 0.5rem;
+    }
+    .class-desc{
+        margin-top : 0.3rem;
+    }
+}
+
+@media only screen  and (max-width : 480px){
+    .title {
+        font-size : 1.4rem;
+        font-weight: bold;
+        color: #fff;
+        margin-bottom : 0.8rem;
+    }
+    .class-skill{
+        display: none;
+    }
+    .class-container{
+        padding : 0.5rem;
+    }
+    .class-desc{
+        margin-top : 0.3rem;
+    }
+}
