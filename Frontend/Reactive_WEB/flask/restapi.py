@@ -11,9 +11,9 @@ def news():
     res = requests.get('https://news.naver.com',
     headers={'User-Agent':'Mozilla/5.0'})
     soup = BeautifulSoup(res.content, 'html.parser')
-    myData = soup.find(class_ ='hdline_flick_tit') 
+    myData = soup.find(class_ ='lnk_hdline_article') 
     
-    print(myData)
+    print(myData.string)
     news_data = dict()
     news_data['info'] = myData.string
     news_data['status'] = True

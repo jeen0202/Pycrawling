@@ -94,7 +94,7 @@ section {
     padding-bottom : 100px;
 }
 .title {
-    font-size : 2rem;
+    font-size : 1.8rem;
     font-weight : bold;
     color : #fff;
     margin-bottom : 0.8rem;
@@ -102,13 +102,13 @@ section {
 .message{
     color: #fff;
     font-size : 1.4rem;
-    line-height : 2rem;
-    
+    line-height : 2rem;  
 }
 .news{
     font-size:1.2rem;
     font-weight: bold;
     color : #fff6ae;
+    margin-bottom : 0.5rem;
 }
 .skill-container{
     width : 100%;
