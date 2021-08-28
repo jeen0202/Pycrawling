@@ -1,13 +1,21 @@
 from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS
+import requests #html load를 위한 library
+from bs4 import BeautifulSoup # parsing을 위한 library
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/news',methods=['GET','POST'])
 def news():
+    res = requests.get('https://news.naver.com',
+    headers={'User-Agent':'Mozilla/5.0'})
+    soup = BeautifulSoup(res.content, 'html.parser')
+    myData = soup.find(class_ ='hdline_flick_tit') 
+    
+    print(myData)
     news_data = dict()
-    news_data['info'] = "최근 소식 : Frontend 강의 완강"
+    news_data['info'] = myData.string
     news_data['status'] = True
     print(news_data)
     if request.method == "POST":

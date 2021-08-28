@@ -26,7 +26,7 @@ const getNewsPost = () => {
     }).then(response => {
         console.log(response.data['status'], response.data['info']);
         const newsMsg = document.querySelector('.news');
-        newsMsg.innerText = response.data['info']
+        newsMsg.innerText = "오늘의 뉴스\n"+response.data['info']
     }).catch((error) => {
         console.log(error);
     })
