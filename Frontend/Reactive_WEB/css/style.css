@@ -258,6 +258,9 @@ section {
     text-overflow: ellipsis;
     margin-bottom : 0.5rem;
 }
+.news-title{
+    white-space:pre-line;
+}
 .class-detail{
     font-size : 0.9rem;
     color : inherit;

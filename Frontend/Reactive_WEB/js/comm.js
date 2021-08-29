@@ -26,7 +26,18 @@ const getNewsPost = () => {
     }).then(response => {
         //console.log(response.data['status'], response.data['info']);
         const newsMsg = document.querySelector('.news');
-        newsMsg.innerText = "오늘의 뉴스"+response.data['info']
+        const newsList = document.querySelectorAll('.news-title')
+        const newsLinks = document.querySelectorAll('.class-card')
+        //const newsList = response.data['newsList'];
+        //const newsLinks = response.data['newsLinks'];
+        for(let i =0;i<newsList.length; i++){
+            newsList[i].innerText=response.data['newsList'][i];
+            newsLinks[i].href=response.data['newsLinks'][i];
+        }
+        newsMsg.innerText = "오늘의 뉴스"+response.data['info'];
+
+
+               
     }).catch((error) => {
         console.log(error);
     })

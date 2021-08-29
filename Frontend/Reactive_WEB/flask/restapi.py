@@ -12,17 +12,25 @@ def news():
     headers={'User-Agent':'Mozilla/5.0'})
     soup = BeautifulSoup(res.content, 'html.parser')
     myData = soup.find(class_ ='lnk_hdline_article') 
-
+    
+    ## list crawling
+    myList = soup.select(".hdline_article_list > li > .hdline_article_tit > a")    
+    #print(type(myList))
     #print(myData.string)
-    news_data = dict()
+    news_data = dict()    
     news_data['info'] = myData.string
     news_data['status'] = True
-    #print(news_data)
+    news_data['newsList'] = list()
+    news_data['newsLinks'] = list()
+    for item in myList:
+        news_data['newsList'].append(item.get_text())
+        news_data['newsLinks'].append(item['href'])    
+    #print(news_data['newsList'])
     if request.method == "POST":
-        print("POST")
+        #print("POST")
         data = request.get_json()
         #print(data)
-        print(data['email'])
+        #print(data['email'])
     if request.method == 'GET':
         print("GET")
         user = request.args.get('email')
