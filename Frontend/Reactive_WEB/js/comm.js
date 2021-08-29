@@ -9,7 +9,7 @@ const getNewsGet = ()=> {
             email : "test@test.com",            
         }
     }).then(response => {
-        console.log(response.data['status'], response.data['info']);
+        //console.log(response.data['status'], response.data['info']);
         const newsMsg = document.querySelector('.news');
         newsMsg.innerText = response.data['info']
     }).catch((error) => {
@@ -24,7 +24,7 @@ const getNewsPost = () => {
             email : "test@test.com"
         }
     }).then(response => {
-        console.log(response.data['status'], response.data['info']);
+        //console.log(response.data['status'], response.data['info']);
         const newsMsg = document.querySelector('.news');
         newsMsg.innerText = "오늘의 뉴스"+response.data['info']
     }).catch((error) => {

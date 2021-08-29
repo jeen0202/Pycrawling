@@ -12,16 +12,16 @@ def news():
     headers={'User-Agent':'Mozilla/5.0'})
     soup = BeautifulSoup(res.content, 'html.parser')
     myData = soup.find(class_ ='lnk_hdline_article') 
-    
-    print(myData.string)
+
+    #print(myData.string)
     news_data = dict()
     news_data['info'] = myData.string
     news_data['status'] = True
-    print(news_data)
+    #print(news_data)
     if request.method == "POST":
         print("POST")
         data = request.get_json()
-        print(data)
+        #print(data)
         print(data['email'])
     if request.method == 'GET':
         print("GET")
