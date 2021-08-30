@@ -27,12 +27,12 @@ const getNewsPost = () => {
         //console.log(response.data['status'], response.data['info']);
         const newsMsg = document.querySelector('.news');
         const newsList = document.querySelectorAll('.news-title')
-        const newsLinks = document.querySelectorAll('.class-card')
+        const newsLinks = document.querySelectorAll('.news-link')
         //const newsList = response.data['newsList'];
         //const newsLinks = response.data['newsLinks'];
         for(let i =0;i<newsList.length; i++){
             newsList[i].innerText=response.data['newsList'][i];
-            newsLinks[i].href=response.data['newsLinks'][i];
+            newsLinks[i].href="https://news.naver.com" +response.data['newsLinks'][i];
         }
         newsMsg.innerText = "오늘의 뉴스"+response.data['info'];
 
