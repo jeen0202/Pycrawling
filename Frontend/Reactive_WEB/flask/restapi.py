@@ -14,7 +14,8 @@ def news():
     myData = soup.find(class_ ='lnk_hdline_article') 
     
     ## list crawling
-    myList = soup.select(".hdline_article_list > li > .hdline_article_tit > a")    
+    myList = soup.select("#_rankingList0 > li > div > div > div > a.list_tit")
+    myPics = soup.select("#_rankingList0 > li > a > img")    
     #print(type(myList))
     #print(myData.string)
     news_data = dict()    
@@ -22,9 +23,14 @@ def news():
     news_data['status'] = True
     news_data['newsList'] = list()
     news_data['newsLinks'] = list()
+    news_data['newsImgs'] = list()
     for item in myList:
         news_data['newsList'].append(item.get_text())
-        news_data['newsLinks'].append(item['href'])    
+        news_data['newsLinks'].append(item['href'])
+    
+    for item in myPics:
+        news_data['newsImgs'].append(item['src'])    
+
     #print(news_data['newsList'])
     if request.method == "POST":
         #print("POST")
