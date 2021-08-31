@@ -34,7 +34,7 @@ const getNewsPost = () => {
         for(let i =0;i<newsList.length; i++){
             newsList[i].innerText=response.data['newsList'][i];
             newsLinks[i].href="https://news.naver.com" +response.data['newsLinks'][i];
-            newsImgs[i].src = resopnse.data['newsImgs'][i];
+            newsImgs[i].src= response.data['newsImgs'][i];
         }
         newsMsg.innerText = "오늘의 뉴스"+response.data['info'];
 

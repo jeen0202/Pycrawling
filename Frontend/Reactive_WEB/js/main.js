@@ -123,7 +123,7 @@ function processTouchStart(event){
     currentImg.addEventListener('touchmove',processTouchMove);
     currentImg.addEventListener('touchend', processTouchEnd);
 
-    currentClassList = currentImg.parentElement.parentElement;
+    currentClassList = currentImg.parentElement.parentElement.parentElement;
     currentActiveLi = currentClassList.getAttribute('data-position');
 
 }
