@@ -12,7 +12,6 @@ def news():
     headers={'User-Agent':'Mozilla/5.0'})
     soup = BeautifulSoup(res.content, 'html.parser')
     myData = soup.find(class_ ='lnk_hdline_article') 
-    
     ## list crawling
     myList = soup.select("#_rankingList0 > li > div > div > div > a.list_tit")
     myPics = soup.select("#_rankingList0 > li > a > img")    
@@ -42,6 +41,22 @@ def news():
         user = request.args.get('email')
         print(user)
 
+    stock_res = requests.get('https://finance.naver.com/',
+    headers={'User-Agent':'Mozilla/5.0'})
+    stock_soup = BeautifulSoup(stock_res.content, 'html.parser')
+    stockLists = stock_soup.select("#container > div.aside > div > div.aside_area.aside_popular > table > tbody > tr > th > a")
+    stockCosts = stock_soup.select("#container > div.aside > div > div.aside_area.aside_popular > table > tbody > tr > td:nth-child(2)")
+    stockChanges = stock_soup.select("#container > div.aside > div > div.aside_area.aside_popular > table > tbody > tr > td:nth-child(3) > span")
+
+    news_data['stocks'] = list()
+    news_data['stock_costs'] = list()
+    news_data['stock_changes'] = list()
+    for item in stockLists:
+        news_data['stocks'].append(item.get_text())
+    for item in stockCosts:
+        news_data['stock_costs'].append(item.get_text())
+    for item in stockChanges:
+        news_data['stock_changes'].append(item.get_text())
     return make_response(jsonify(news_data), 200)
 
 if __name__ == '__main__':
