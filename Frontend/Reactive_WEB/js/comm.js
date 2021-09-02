@@ -30,11 +30,15 @@ const getNewsPost = () => {
         const newsLinks = document.querySelectorAll('.news-link')
         const newsImgs = document.querySelectorAll('.news-image')
         //const newsList = response.data['newsList'];
-        //const newsLinks = response.data['newsLinks'];
+        //const newsLinks = response.data['newsLinks'];        
+        const stockData = document.querySelectorAll('.stock');
+        const stockCosts = document.querySelectorAll('.stockCost');
         for(let i =0;i<newsList.length; i++){
             newsList[i].innerText=response.data['newsList'][i];
             newsLinks[i].href="https://news.naver.com" +response.data['newsLinks'][i];
             newsImgs[i].src= response.data['newsImgs'][i];
+            stockData[i].innerText = response.data['stocks'][i];
+            stockCosts[i].innerText = response.data['stock_costs'][i];
         }
         newsMsg.innerText = "오늘의 뉴스"+response.data['info'];
 
