@@ -162,6 +162,16 @@ section {
     align-content : center;
     margin-bottom:0.2rem;
 }
+.stock{
+    display: flex;
+    flex-direction: column;
+}
+.stock-costs{
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .skill-name {
     font-weight : bold;
     color : #545e6f;
