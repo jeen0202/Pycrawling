@@ -47,16 +47,19 @@ def news():
     stockLists = stock_soup.select("#container > div.aside > div > div.aside_area.aside_popular > table > tbody > tr > th > a")
     stockCosts = stock_soup.select("#container > div.aside > div > div.aside_area.aside_popular > table > tbody > tr > td:nth-child(2)")
     stockChanges = stock_soup.select("#container > div.aside > div > div.aside_area.aside_popular > table > tbody > tr > td:nth-child(3) > span")
-
+    stockColor = stock_soup.select("#container > div.aside > div > div.aside_area.aside_popular > table > tbody > tr")
     news_data['stocks'] = list()
     news_data['stock_costs'] = list()
     news_data['stock_changes'] = list()
+    news_data['stock_color'] = list()
     for item in stockLists:
-        news_data['stocks'].append(item.get_text())
+        news_data['stocks'].append(item.get_text())        
     for item in stockCosts:
         news_data['stock_costs'].append(item.get_text())
     for item in stockChanges:
         news_data['stock_changes'].append(item.get_text())
+    for item in stockColor:
+        news_data['stock_color'].append(item['class'])
     return make_response(jsonify(news_data), 200)
 
 if __name__ == '__main__':

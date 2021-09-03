@@ -920,7 +920,7 @@ flexbox의 구성 요소
 ### flex-flow : direction과 wrap 속성의 단축 프로퍼티
 ### justify-content : 주 축 기반 수평 병렬 방식 설정
     + flex-start : 왼쪽부터 수평정렬
-    + flex-end : 오른쪽 수평 정렬ㄹ
+    + flex-end : 오른쪽 수평 정렬
     + center : 가운데 수평 정렬
     + space-between : 좌우끝에 item 배치후 내부 item들은 균등 간격으로
     + space-around : container 내부에 균등간격으로 배치
