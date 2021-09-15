@@ -184,4 +184,38 @@ find / -name "*.py" > list.txt &
   + Windows의 바로가기와 동일
   + ls -al하면 Soft link 확인 가능
   + rm으로 원본을 삭제하면 해당 파일 접근 불가
-  
+
+## Ubuntu 패키지 관리
+### Ubuntu 배포판
++ Debian 배포판을 기반으로 Canonical 사가 ubuntu 배포판 개발
+  + Debian 배포판은 apt 프로그래믕ㄹ 이요해 SW 설치/업데이트를 간편하게 한 패키지
++ ubuntu의 뜻 : 남아프리카 언어로 '네가 있으니 나도 있다'
+  + ubuntu desktop 개포판 (X윈도우 기ㅏㅂㄴ, GUI 기본 제공))과 ubuntu server 배포판 을 제공
+  + 지원기간이 5년인 LTS 버전이 그보다 짧은 일반 버전으로 나누어서 배포
+### Ubuntu package Manager
++ CentOS나 Fedora와 같은 ReadHat 계열 : RPM을 패키징 시스템으로 사용
++ ubuntu와 같은 Debian 계열 : deb를 패키징 시스템으로 사용
++ 패키지와 그 정보를 가지고 있는 패키지 저장소라는 개념을 보유
+## Ubuntu Package 관리 실무
++ ubuntu package index 정보 업데이트(배포판 버전에 따른 패키지 업데이트 버전 정보 등)
+``` bash
+sudo apt-get update
+```
++ 설치된 ubuntu package 업그레이드(```주의 요망```)
+``` bash
+sudo apt-get upgrade
+```
++ 패키지 설치
+``` bash
+sudo apt-get install 패키지명
+```
++ 패키지 삭제(설정파일 제외)
+``` bash
+sudo apt-get remove 패키지명
+```
++ 패키지 삭제(설정파일 포함)
+``` bash
+sudo apt-get --purge remove 패키지명
+```
+
+
