@@ -100,3 +100,75 @@ cat myfile.cnf
 rm myfile.cnf
 ```
 > Linux에는 휴지통이 없다.
+
+## Linux의 Redirect와 Pipe
+### Standard Stream (표준 입출력)
++ command 로 실행되는 process의 3가지 stream 유형
+  + 표준 입력 - stdin(standard input stream)
+  + 표준 출력 - stdout(standard output stream)
+  + 오류 출력 - stderr(standard error stream)
++ 모든 스트림은 plain text로 console에 출력
+
+## Redirection (리다이렉션)
++ 표준 스트림 흐름을 바꿀 수 있다.
+  + ```>,<``` 기호를 사용하여 표준출력을 파일에 저장할 때 주로 사용한다.
+  ``` bash
+  ls > file.txt
+  # ls로 출력되는 표준출력 스트림을 file.txt로 이동(저장)
+  head < file.txt
+  # 파일 첫부분부터 10라인 까지 출력해주는 명령 head를 file.txt에 적용
+  ```
+## Pipe(파이프)
++ ```|```기호를 사용하여 두 프로세스간 출력 스트림을 다른 프로세스의 입력 스트림으로 사용 할때 사용
+``` bash
+ls -al | grep bash
+# 폴더내의 모든 파일을 출력하고 이 결과에서 bash가 들어간 파일 검색
+```
+
+### grep : 검색 명령어
+  + option
+    + -l : 대소문자 미구분
+    + -v : pattern을 포함하지 않는 라인 출력
+    + -n : 검색 결과의 각 행 선두에 행 번호 입력
+    + -l : 파일명만 출력
+    + -c : 일치하는 라인의 개수 출력
+    + -r : 하위 디렉토리까지 검색
+
+## Linux Process Management
+### Process vs Binary
+  + 코드 이미지 또는 Binary : 실행파일
+  + 실행중인 프로그램 : 프로세스
+    + 가상/물리 메모리 정보
+    + 리소스 관련 정보 
+### 리눅스의 실행 환경
++ Linux는 기본적으로 다양한 프로세스 실행
++ 유닉스 철학 : 여러 프로그램이 서로 유기적으로 각자의 수행하여 전체 시스템이 동작하도록 하는 원리
+
+### Foreground & Background
++ foreground process : Shell 에서 해당 프로세스 실행을 명령할 경우 사용자가 다른 입력을 하지 못하는 프로세스
++ background process : 사용자 입력과 상관없이 실행되는 프로세스
+  + process 실행 명령 종단에 &를 추가하여 실행
+```bash
+#사용 예시
+find / -name "*.py" > list.txt &
+```
+> foreground process 제어
+> ```[CTRL]+C``` : 프로레스 작업 취소 및 종료
+
+### process 상태확인 -ps 명령어
++ 사용법 ps [option(s)]
+  -a : 시스템을 사용하는 모든 사용자의 프로세스 출력<br/>
+  -u : 프로세스 소유자에 대한 상세 정보 출력 <br>
+  -l : 프로세스 관련 상제 정보 출력 <br>
+  -x : 터미널에 로그인한 후 실행한 프로세스가 아닌 데몬 프로세스도 포함하여 출력 <br>
+  -e : 해당 프로세스와 관련된 환경 변수까지 출력<br>
+  -f : 프로세스간 관계 정보 출력
+  > daemon process(데몬 프로세스 ) : 사용자 모르게 시스템 관리를 위해 실행되는 프로세스
+
+### 프로세스 중지
++ kill 명령어
+  + 사용법
+    1. kill % 작업번호
+    2. kill 프로세스ID
+    3. 작업 강제 종료 옵션 -9
+    
