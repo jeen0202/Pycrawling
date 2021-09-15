@@ -171,4 +171,17 @@ find / -name "*.py" > list.txt &
     1. kill % 작업번호
     2. kill 프로세스ID
     3. 작업 강제 종료 옵션 -9
-    
+
+## Linux Shell 사용법 (Hard-link/Soft-link)
++ cp 명령어 : 파일 복사
+  + cp 원본 복제본 : 원본과 복제본은 각각 물리적으로 다른 파일로 저장
+  + 하위폴더 포함 복사
++ Hard link : ln A B
+  + A와B는 동일한 파일을 가르킨다.
+  + 동일한 파일을 지칭하는 이름을 추가로 만드는 방식
+  + 전체 파일 용량은 달라지지 않는다.
++ Soft(Symbolic) link : ln-s A B
+  + Windows의 바로가기와 동일
+  + ls -al하면 Soft link 확인 가능
+  + rm으로 원본을 삭제하면 해당 파일 접근 불가
+  
