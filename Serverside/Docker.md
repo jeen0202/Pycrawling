@@ -230,3 +230,58 @@ docker container prune # 정지된 container 삭제
 docker image prune # 실행된 container image외의 모든 image 삭제
 docker system prune # 정지된 container, 실행중인 container image 외의 모든 image, volume, network 삭제
 ```
+
+## Dockerfile
+: Docker image 작성을 위한 스크립트로 Dockerfile 문법으로 작성된 DockerFile을 기반으로 이미지를 생성/배포 하는게 활용된다.
+
+## Dockerfile 기본 문법
++ text 파일 형식으로, 사용자가 원하는 다양한 데이터로 작성 가능
++ 기본 문법
+    + command/parameter로 이루어져있다.
+    + Command는 구분을 위해 통상적으로 대문자로 작성한다.
+### Dockerfile 주요 명령
+|명령|설명|
+|---|---------|
+|FROM|Base Image 지정|
+|LABEL|Image 설명을 작성하기 위한 명령(버전정보,작성자...)|
+|CMD|Container 시작시 실행할 Shell 명령을 지정|
+|RUN|Shell 명령 시작|
+|ENTRYPOINT|Container 시작시, 실행할 Shell 명령 지정, docker run 실행시에도 덮어씌워지지 않음|
+|EXPOSE|Container 외부에 Open할 포트 설정|
+|ENV|Container 내부에서 사용할 환경 변수 지정|
+|WORKDIR|Container의 작업 디렉토리 설정|
+|COPY|파일/디렉토리를 Container에 복사, URL지정 불가, 압축파일 자동 해제 미지원|
++ 참고 명령어
+
+|명령|설명|
+|---|--------|
+
++ Dockerfile에서는 주석 사용가능
+``` bash
+# Dockerfile 주석 : Line 단위
+```
+
+### FROM
++ Base Image 지정 명령
++ Dockerfile에 반드시 작성해야한다.
+``` docker
+FROM alpine
+```
+### Dockerfile 로 Image 작성
+``` docker
+docker bulid [option] Dockerfile_경로
+```
++ 주요 옵션
+
+|옵션|설명|
+|---|--------|
+|-t| --tag| 이미지 이름(Repository) 설정, 이름:태그 형식으로 태그 설정 가능(default:latest)|
+|-f| image 빌드시 Dockerfile명으로 된 파일을 찾아 빌드실행
+|--pull| image 생성시마다 새로 다운로드 --pull=true 형식으로 작성. base image를 수시로 업데이트할때 주로사용|
+
+### LABEL
++ <key>=<value> 형식으로 dockerfile에 메타 데이터 삽입
++ 보통 저자, 버전, 설명, 작성일자 등을 기재할때 사용
+``` docker
+LABEL KEY이름 = value
+```
