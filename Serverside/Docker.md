@@ -152,4 +152,81 @@ docker stop Container이름
 # Contatiner 재실행
 docker restart Container이름
 ```
+ 
+## docker에서 Apache Web server 실행
+``` bash
+docker run -p 포트번호:80 --name apache httpd
+# -p 옵션을 사용하여 지정한 포트번호에 apache서버를 연결
+```
+### 보안그룹에 포트 지정
+1. EC2 인스턴스 메뉴 접속
+2. 보안 메뉴 => 보안 그룹
+3. 인바운드 규칙 편집
+4. 포트 범위와 허용ip 지정
 
+> 이후 탄력적 IP주소:포트번호로 접속시 it works 메시지 출력됨
+
+### Docker continaer와 사용자 directory 연결
++ Docker는 이미지를 기반으로 만들어진 컨테이너이기 때문에, 컨테이너 종료시 내부에 존재하던 파일도 함께 사라짐
+    + 이를 보완하기 위해 ```docker run```의 ```-v``` 옵션을 사용하여 Host  PC의 사용자 디렉토리를 바인딩(공유)하여 사용한다.
++ httpd Image의 apache 기본설정에 의해 포트포워딩옵션에 포트까지만 기재하였을때는 /usr/local/apache/htdocs 폴더의 index를 자동으로 실행한다.
+    + 즉 실행되는 폴더를 변경하여서 다른 웹 페이지를 보여줄 수 있다.
+
+### ftp를 사용하여 EC2 Server에 파일 업로드
+1. FileZila Client 를 사용하여 파일 EC2 업로드
+    - 사이트 관리자를 통해 서버에 연결
+        - 프로토콜 : sftp
+        - 호스트 : 탄력적 ip 주소
+        - 로그온 유형 : 키파일
+        - 사용자 : ubuntu
+        - 키파일 : AWS 인증 pem 파일
+    - index.html이 포함된 폴더 업로드
+2. docker run의 -v 옵션을 활용해 directory 연결
+``` bash
+docker run -v 호스트PC에서의폴더경로/Container절대경로 httpd
+```
+> 편리한 접속을 위해 80 포트에서의 인바운드 옵션을 지정하면 포트입력없이 ip주소만으로도 접속 가능
+
+### docker 저장매체 확인
+``` bash
+docker system df
+```
+
+### Docker와 Alpine
++ Docker Image는 여러개의 Image가 Layer로 쌓인 형태로 작성
+    + 특정 응용프로그램의 실행을 목적으로 하는 Container의 경우, 다양한 기능을 포함하는것은 낭비가 될수있다.
++ 대부분의 Docker 이미지에서는 ubuntu 가아닌 alpine이 base image인 경우가 많다.
+    + alpine
+        - Embedded Linux를 위한 C/POSIX lib[musl lib] 와 운영 체제 운영이 필요한 기본 유틸리티[BusyBox]만 모아놓은 패키지
+        - 대부분의 image에서 ```:alpine```태그로 불러올 수 있다.
+
+### 실행중인 Container의 사용 리소스 확인
+``` bash
+docker container stats
+```
+
+### 실행중인 Container에 명령 실행
+``` baseh
+docker exec [options] containerID 명령인자
+```
++ 실행중인 Container의 Shell 유형을 잘 확인해야한다.
+
+### 실행중인 Container에 연결
++ 백그라운드에서 실행중인 Container에 들어갈때 주로 사용
+``` bash
+docker attach Container_ID
+```
+
+### 모든 Container 삭제 (+이미지 삭제)
+> notepad에 기재해 놓고 Copy&Paste로 사용하는것이 일반적
+```bash
+    docker stop $(docker ps -a -q) # 모든 Container 중지
+    docker rm $(docker ps -a -q) # 모든 Container 삭제
+    docker rmi -f $(docker images -q) # 모든 Image 삭제
+``` 
++ 정지된 Container 모두 삭제
+``` bash
+docker container prune # 정지된 container 삭제
+docker image prune # 실행된 container image외의 모든 image 삭제
+docker system prune # 정지된 container, 실행중인 container image 외의 모든 image, volume, network 삭제
+```
