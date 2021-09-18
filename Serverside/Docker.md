@@ -285,3 +285,17 @@ docker bulid [option] Dockerfile_경로
 ``` docker
 LABEL KEY이름 = value
 ```
+
+### COPY
+: Dockerfile 위에 경로로 지정된 파일을 쌓아올리고 Image 생성
+``` docker
+COPY 수정경로 기존경로
+```
+
+### CMD
++ CMD 명령의 3가지 형태
+    - 명령어, 인자를 리스트처럼 작성
+    - ENTRYPOINT 명령어에 인자를 리스트처럼 작성
+    - 쉘 명령어 처럼 작성
+> Dockerfile 1개당 1개의 CMD만을 적용할 수있고, 여러개를 적용할 경우 마지막 설정만 적용
+ 
