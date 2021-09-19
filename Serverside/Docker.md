@@ -239,7 +239,7 @@ docker system prune # 정지된 container, 실행중인 container image 외의 �
 + 기본 문법
     + command/parameter로 이루어져있다.
     + Command는 구분을 위해 통상적으로 대문자로 작성한다.
-### Dockerfile 주요 명령
+## Dockerfile 주요 명령
 |명령|설명|
 |---|---------|
 |FROM|Base Image 지정|
@@ -299,3 +299,37 @@ COPY 수정경로 기존경로
     - 쉘 명령어 처럼 작성
 > Dockerfile 1개당 1개의 CMD만을 적용할 수있고, 여러개를 적용할 경우 마지막 설정만 적용
  
+## 가끔 사용되는 Docker 명령어
+### logs
+: container의 에러, 출력의 결과를 리스트업
+``` docker
+docker logs ContainerID/이름
+```
+### kill
+: Container를 즉시 중지
+``` docker
+docker kill ContainerID/이름
+```
+
+### CMD 명령 덮어 씌우기
+: run command의 맨 끝에 CMD명령을 작성하여 덮어씌울 수 있다.
+``` docker
+docker run [options] [CMD 명령]
+```
+
+### ENTRYPOINT
++ docker run command에 함께 넣어지는 CMD 명령과 무관하게 반드시 실행되어야 하는 명령을 기입하기 위해 사용
+  + docker run시에 ENTRYPOINT에 작성된 명령의 인자가 사용된다.
+  + Conatainer 실행시 반드시 실행되어야하는 명령은 ENTRYPOINT에, Container 생성시 필요한 인자는 docker run에 작성하여 활용한다.
+
+### RUN
++ Image 생성시, layer로 나뉘어 작업 된다.
++ RUN command는 Image 생성시, layer를 만들수 있는 명령으로, 일반적으로 Base Image에 패키지를 설치하여 새로운 Image를 만들때 사용된다.
+**예시**
+``` docker
+FROM ubuntu:20.04
+LABEL maintainer="test"
+
+RUN apt-get update
+RUN apt-get install -y apache2 apt-utils
+```
