@@ -333,3 +333,23 @@ LABEL maintainer="test"
 RUN apt-get update
 RUN apt-get install -y apache2 apt-utils
 ```
+
+### EXPOSE
++ docker Container의 특정 port를 외부에 open하는 섲렁
+    + docker run -p 옵션 : Port Open 및 매핑
++ EXPOSE는 Container 생성시, Port Open까지만 설정
+    + EXPOSE Option으로 만으로는 Host PC에서 접속이 불가능하다.
+
+### ENV
++ Container 내의 환경 변수 설정
++ RUN, CMD, ENTRYPOINT 에도 적용
+
+### WORKDIR
++ RUN,CMD, ENTRYPOINT 명령이 실행될 디렉토리 설정
+
+```docker
+FROM httpd:alpine
+
+WORKDIR /usr/local/apache2/htdocs
+```
+
