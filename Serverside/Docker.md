@@ -353,3 +353,11 @@ FROM httpd:alpine
 WORKDIR /usr/local/apache2/htdocs
 ```
 
+### 부수 명령어
+|Command|DEscription|
+|ADD|Copy명령과 유사한 명령을 보다 명시적으로|
+|SHELL|쉘 프로그램 지정 명령, CMD로 대체 가능|
+|ARG|dockerfile 내에서 필요한 변수 설정|
+|USER|작업을 진행하는 user id 지정|
+|ONBUILD|새로운 이미지를 생성시 실행하는 명령 지정|
+|VOLUME|볼륨 생성|
