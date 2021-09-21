@@ -354,10 +354,44 @@ WORKDIR /usr/local/apache2/htdocs
 ```
 
 ### 부수 명령어
-|Command|DEscription|
+|Command|Description|
+|---|-------|
 |ADD|Copy명령과 유사한 명령을 보다 명시적으로|
 |SHELL|쉘 프로그램 지정 명령, CMD로 대체 가능|
 |ARG|dockerfile 내에서 필요한 변수 설정|
 |USER|작업을 진행하는 user id 지정|
 |ONBUILD|새로운 이미지를 생성시 실행하는 명령 지정|
 |VOLUME|볼륨 생성|
+
+## Docker Inspect
+
+### Docker History
+: Image History(Layer 구조) 확인<br>
++ Docker Image 생성 순서대로 List-up해서 보여준다.
+
+### Docker cp
++ Cotainer에서 파일 조작을 위해 특정 파일을 Host로 꺼내오는 Command
++ 파일 확인을 위해 활용가능
+
+### docker commit
++ Container 변경 사항을 이미지 파일로 생성(변경 사항을 반영)<br>
++ git처럼 -m option을 통해 메시지와 함께 commit 가능
+``` docker
+docker commit [options] Container이름/ID[:태그]
+```
+
+### docker diff
++ Container가 실행되면서 원 Image와 비교하여 변경된 파일 목록 출력
++ Options  
+
+|기호|설명|
+|---|-------|
+|A|파일 또는 디렉토리 추가|
+|D|파일 또는 디렉토리 삭제|
+|C|파일 또는 디렉토리 수정|
+
+### Docker Inspect
++ Image과 Container 세부정보 확인
+
+### Docker logs
++ Container의 출력결과(STDOUT)을 확인
