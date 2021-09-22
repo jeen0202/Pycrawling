@@ -395,3 +395,71 @@ docker commit [options] Container이름/ID[:태그]
 
 ### Docker logs
 + Container의 출력결과(STDOUT)을 확인
+
+## Container 활용
+
+### Docker에서 Python 개발을 위한 jupyter notebook Mount
+1. Container내부에서 jupyter notebook의 실행폴더를 host PC에 생성
+2. Host PC에서 docker 실행 폴더에 있는 jupyter notebook 파일 작업에 가능하게 설정
+``` docker
+docker run -rm -d -p 8888:8888 -v /home/ubuntu/실행폴더:/home/jovyan/work jupyter/datascience-notebook
+```
+3. Docker logs Command를 사용하여 jupyter notebook token을 확인하고 접속
+   
+### Container간의 연결(mysql)
+
+**1. Mysql Container 생성**
+``` docker
+FROM mysql:버전
+
+ENV MYSQL_ROOT_PASSWORD=ROOT비밀번호
+ENV MYSQL_DATABASE=DB이름 
+```
+**2. 인스턴스에서 포트 open**
+
+**3. pymysql lib를 통한 연결**
+
+```python
+db = pymysql.connect(
+    host='탄력적IP주소', 
+    port=포트번호, 
+    user='root', 
+    passwd='Dockerfile에서 지정한 root 비밀번호', 
+    db='Dockerfile에서 지정한 db이름', 
+    charset='utf8')
+```
+**--link option 사용**
++ Contatiner간의 내부적인 network를 사용하여 연결하는 방식
++ docker run --link 옵션으로 연결 가능
++ --link <Container이름>:<Alias>
+
+**0. 미리 생성되어있는 mysqldata 디렉토리 제거**
+``` bash
+sudo rm -rf mysqldata/
+```
+**1. mysql image build**
+``` bash
+docker build --tag image태그 -f mysql_Docker파일 .
+```
+**2. mysql container 실행**
++ 외부에서의 접근을 막기위해 -p option 미사용
+``` bash
+docker run --rm -d --name container이름 -v /home/ubuntu/mysqldata:/var/lib/mysql image태그
+```
+
+**3. jupyter notebook container 실행**
++ --link option을 사용하여 mysql Container와 연결
+```bash
+docker run --rm -d -p 8888:8888 -v /home/ubuntu/작업폴더:/home/jovyan/work --link mysqlContainer이름:새이름 jupyter/datascience-notebook
+```
+
+**4. jupyter notebook에 접속후 mysql 접속**
+```python
+db = pymysql.connect(
+    host='link에서 지정한 alias', # ip대신 지정한 alias로 접속
+    port=open포트, 
+    user='root', 
+    passwd='root비밀번호', 
+    db='dockefile db이름', 
+    charset='utf8')
+```
