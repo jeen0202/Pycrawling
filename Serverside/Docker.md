@@ -630,3 +630,85 @@ docker-compose up # -d : 백그라운드 실행
 docker-compose stop # docker compose 중지
 docker-compose down # docker compose up으로 생성된 Container 삭제
 ```
+## Docker Compose 추가 문법
+### bulids
+: image를 dockerfile 기반으로 작성시 사용<br/>
++ 부수 요소
+    + context : Dockerfile 경로
+    + dockerfile : Dockerfile 파일명
+```yaml
+    Container 이름:
+        bulid : 
+            context : Docker 파일 경로
+            dockerfile : Dockerfile 이름
+```
+### links
++ Contaner를 연결하기위해 docker run 의 --link 옵션처럼 사용
++ Container이름을 그대로 쓸 경우 ```:태그``` 생략 가능
+``` yaml
+    Conatiner 이름:
+        links:
+            - "연결할 Container 이름:호출할 이름"            
+```
+### container_name
+: Container의 이름을 별도로 설정<br>
+``` yaml
+    Container 이름:
+        container_name : Container 호출시 사용할 이름
+```
+### depends_on
+: 해당 Container가 의존하고있어 우선 생성되어야 할 Container 명<br>
++ Container간 의존도를 완벽하게 해결해 주지는 못한다.
+``` yaml
+    Container 이름:
+        depends_on:
+            - 의존하고있는 Container 이름
+```
+## dockerignore
++ Dockerfile의 COPY Command 동작시에 특정 파일/폴더를 제외하기 위한 문서
+    + 형식상 git의 .gitignore과 유사
++ dockerignore 포맷
+```
+# 주석
+* : 모든 , ? : 한글자 , ! : 예외취소
+*/apple* : 어떤폴더의 어떤 하위폴더든 apple로 시작하는 폴더/파일명은 제외
+*/*/apple* : 현재폴더의 하위폴더의 하위폴더에서 apple로 시작하는 폴더/파일명 제외 
+apple? : apple + 한글자인 모든 폴더/파일 제외
+apple* : apple로 시작하는 모든 폴더/파일 제외
+```
+## Docker-Compose 사용 예시(Flask-mysql 연동)
+``` yaml
+version : "3"
+
+services :
+    app:
+        build:
+            context: ./01_FLASK_DOCKER
+            dockerfile: Dockerfile
+        links:
+            - "db:mysqldb"
+        ports:
+            - "80:8080"
+        contaier_name: appcontainer
+        depends_on :
+            - db
+    db:
+        image: mysql:5.7
+        volumes :
+            - ./mysqldata:/var/lib/mysql
+        enviroment:
+            - MYSQL_ROOT_PASSWORD=비밀번호
+            - MYSQL_DATABASE = db이름
+        ports:
+            - "3306:3306"
+        container_name: dbcontainer
+```
+
+### docker-compose logs [컨테이너명]
+: 각 Container의 모든 log(출력결과) 확인
+
+### docker-compose config
+: 실행중인 Docker Compose의 docker-compose.yml 설정 확인
+
+### docker-compose exec [Conatiner명] [Command]
+: 실행중인 Container에 Command 실행
