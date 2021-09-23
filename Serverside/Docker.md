@@ -534,3 +534,99 @@ services:
         ports :
         - "3307:3306"
 ```
+
+## docker-compose.yml 기본 layout
+``` yaml
+#Docker Compose 파일 format Version 지정
+version : 
+
+# Container 설정
+services :
+
+# Container에서 사용되는 Volume 설정 (optional)
+volumes :
+
+# Container 간 Network 분리를 위한 추가 설정 (optional)
+networks : 
+```
+
+### version
++ Docker Compose 파일 포맷 버전 지정
++ Docker 버전에 따라 지원하는 Docker Compose 버전이 있으며, default로는 version 3 를 사용
+    + 최신 버전의 docker compose 사용시 최선 docker 버전에서만 지원
+
+### services
++ (여러개의) Container 설정
+``` yaml
+services:
+    Container1:
+        ...
+    Conatiner2:
+        ...
+    ...
+```
+
+### images
++ Container 작성시 Docker HUB의 Image 사용을 위한 문법
+``` yaml
+services:
+    Container이름:
+        image : Image이름
+```
+### restart
++ Container 다운시 항상 재시작하는 설정
+> 24시간 동작을 요구하는 Server의 경우 필수적인 Option
+``` yaml
+    Container 이름:
+        image : Image이름
+        restart : 재시작 옵션(always/no/on-failure/unless-stopped)
+```
+### volumes
++ docker run의 -v option처럼 사용
++ 여러 volume 지정을 위해 list 처럼 작성
+``` yaml
+    services:
+        container 이름:
+            image:
+            restart:
+            volumes :
+                - 디렉토리 주소
+```
+
+### environment
++ dockerfile의 ENV 옵션처럼 작성
+``` yaml
+    services:
+        container 이름:
+            image:
+            restart:
+            volumes :
+            environment:
+                - 환경변수 설정                
+```
++ env_file 옵션으로 파일을 읽어올 수도 있음
+
+### ports
++ docker run의 -p 와 동일하게 사용
++ aa:bb 형식은 시간문법으로 사용되기 때문에 ```""``` 내부에 작성
+``` yaml
+    services:
+        container 이름:
+            image:
+            restart:
+            volumes :
+            environment:
+            ports:
+                - "포트번호:포트번호"              
+```
+
+## Docker Compose 실행/중지
+### Docker Compose 실행 Command
+``` bash
+docker-compose up # -d : 백그라운드 실행
+```
+### Docker Compose 중지/삭제 명령
+``` bash
+docker-compose stop # docker compose 중지
+docker-compose down # docker compose up으로 생성된 Container 삭제
+```
