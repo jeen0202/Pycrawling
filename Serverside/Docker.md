@@ -463,3 +463,74 @@ db = pymysql.connect(
     db='dockefile db이름', 
     charset='utf8')
 ```
+
+# Docker Compose
++ 복수의 Container를 한꺼번에 관리하기위한 관리 Tool
++ Frontend, Backend, DB 등 역할에 따라 분리된 서버로 관리되는 경우가 일반적인다.
+    + 각 Server를 Container로 구현하여 연결하는 동작을 쉽게 하기위해 Docker Container와 같은 관리 Tool이 필요함
++ 서비스의 규모가 더욱 커지면, 쿠버네티스 등의 관리 툴이 사용되기도 한다.
+
+## Docker Compose 작성 기본
+: YAML 형식으로 작성된 docker-compose.yml 파일로 실행<br/> 
+
+## *YAML 문법*
++ JSON, XML, CSV와 같은 데이터 구조화 문법
+    + Key-value, Indent 중심의 문법구조
++ **기본 문법**
+
+|기호|용법|
+|---|-----|
+|#|주석|
+|---|문서의 시작(optional)|
+|...|문서의 끝(optional)|
+|key-value|Key-value 자료구조|
+| \\|- ||
+|>||
++ 자료형
+    + int,string,bool 지원
++ list를 Indent와 ```-```로 표현
++ 줄바꿈 표시
+    + | : 줄바꿈 일괄 적용(마지막 줄바꿈 포함)
+``` yaml 
+newline : |
+            1라인
+
+            2라인
+
+            3라인
+
+```
+    + |- : 줄바꿈 일괄 적용(마지막 줄바꿈 제외)
+``` yaml
+newline : |-
+            1라인
+
+            2라인
+
+            3라인
+```
+    + > : 줄바꿈 일괄 적용(각line당 1개만 인정)
+``` yaml
+newline = >
+            1라인
+
+            2라인
+
+            3라인
+```
+## docker-compose.yml 예시
+``` yaml
+version : '3'
+
+services:
+    db:
+        image: mysql
+        restart: always
+        volumes:
+            - ./mysqldata:/var/lib/mysql
+        enviroment:
+            - MYSQL_ROOT_PASSWORD=jjcoding
+            - MYSQL_DATABASE= jjdb
+        ports :
+        - "3307:3306"
+```
