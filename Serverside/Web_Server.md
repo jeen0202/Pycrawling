@@ -64,3 +64,147 @@ vim /etc/nginx/nginx.conf
 
 **참고 사함**
 > nginx의 설치 방법에 따라, 설정 파일의 위치가 다를 수 있다. 
+
+### default에서의 Server 설정
+|Name|Desc|
+|---|-----|
+|listen|HTTP Request를 받을 Port|
+|default_server|모든 웹서버 Request를 받는다는 명시적 표시|
+|2열의 listen|IPv6 포트 설정|
+|root|html파일의 경로|
+|server_name|Request를 받을 Domain name|
+|location|주소에 따라 응답하기 위한 경로설정을 위한 설정|
+
+> 설정 변경후 아래 Command를 사용해 nginx restart
+``` bash
+service nginx restart
+```
+
+## nginx reverse proxy
+
+### Proxy Server
+ : Client가 다른 네트워크 서비스에 접속할수 있게 만들어 주는 서버
+
+### Forward Proxy
+ : Client가 외부 네트워크에 직접 접근하지 않고, Proxy에 접근 요청을 하고, Proxy Server가 외부에 대신 접속하여 Client에 전달하는 서버
+
+ > 클라이언트가 자주 접속하는 외부서비스 관련 데이터를 캐시에 저장하여 성능 향상에 기여한다.
+
+### Reverse Proxy
+ : Client가 Reverse Proxy에 요청하여, Proxy Server 내부 서버에 접속하여 결과를 Client에 전달하는 서버
+> 내부 DB와 같이 보안이 중요한 서버에 대한 직접 접속을 막을 수 있어 보안에 유익하다.
+> 요청 트래픽 관리를위한 Load Balancing 등에 유익함
+
+### Nginx reverse proxy 01 : Port로 구분
++ nginx reverse proxy 서버에 Port를 2개 open하여, 각 내부서버에서 결과를 가져오도록 구성
+    + 내부 서버는 또다른 web server(nginx/apache)로 구성
+    + Docker Compose 파일
+    ```yaml
+    version: "3"
+    # 3개의 Container를 포함하는 서비스
+    services:
+        #2개의 open port를 가지고 있는 nginx 서버     
+        nginxproxy:
+            image: nginx:1.18.0
+            ports:
+                - "8080:8080"
+                - "8081:8081"
+            restart: always
+            volumes:
+                - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+
+        #외부에 open된 port가 없는 nginx 서버
+        nginx:
+            depends_on:
+                - nginxproxy
+            image: nginx:1.18.0
+            restart: always
+
+        #외부에 open된 port가 없는 apache 서버
+        apache:
+            depends_on:
+                - nginxproxy
+            image: httpd:2.4.46
+            restart: always
+    ```
+    + nginx.conf 파일
+        + upstream, server 설정 추가
+        + default.conf 설정과 겹치지 않도록 함
+        ``` conf
+            user nginx;
+        worker_processes  auto;
+
+        error_log  /var/log/nginx/error.log warn;
+        pid        /var/run/nginx.pid;
+
+        events { 
+            worker_connections 1024; 
+        }
+
+        http {
+            # data type에 따라 적절한 동작을 하기 위한 설정 
+            include       /etc/nginx/mime.types;
+            # 기재되어있지 않는 type에 대해서는 표준포맷을 적용
+            default_type  application/octet-stream;
+            # log에 기재되는 값을 지정
+            log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                            '$status $body_bytes_sent "$http_referer" '
+                            '"$http_user_agent" "$http_x_forwarded_for"';
+            # 접속 기록
+            access_log  /var/log/nginx/access.log  main;
+            # Reponse 시 user 영역의 buffer가 아닌 kernel file buffer를 사용
+            sendfile on;
+            keepalive_timeout 65;
+            #container의 내부 통신을 위해 port 설정
+            upstream docker-nginx {
+                server nginx:80;
+            }
+            #container의 내부 통신을 위해 port 설정
+            upstream docker-apache {
+                server apache:80;
+            }
+
+            server {
+                # port에 
+                listen 8080;
+
+                location / {
+                    #upstream에서 지정한 이름(port)에 포워딩
+                    proxy_pass         http://docker-nginx;
+                    proxy_redirect     off;
+                    proxy_set_header   Host $host;
+                    proxy_set_header   X-Real-IP $remote_addr;
+                    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+                    proxy_set_header   X-Forwarded-Host $server_name;
+                }
+            }
+
+            server {
+                listen 8081;
+
+                location / {
+                    #upstream에서 지정한 이름(port)에 포워딩
+                    proxy_pass         http://docker-apache;
+                    proxy_redirect     off;
+                    proxy_set_header   Host $host;
+                    proxy_set_header   X-Real-IP $remote_addr;
+                    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+                    proxy_set_header   X-Forwarded-Host $server_name;
+                }
+            }
+        }
+        ```
+**참고 사항 : Nginx proxy HTTP 설정 이해**
+ + reserved proxy와 내부 서버 사이에 http 통신을 하면, 외부 클라이언트 정보가 누락되어 이상 동작을 할 수 있음
+ + proxy header에 정보를 기입하여 이상 동작을 방지 
+ ``` conf
+proxy_set_header   Host $host;
+proxy_redirect     off; # 서버 응답 헤더의 주소 변경 
+proxy_set_header   X-Real-IP $remote_addr; # 실제 Client의 ip
+proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for; # proxy 거쳐온 server ip 리스트
+proxy_set_header   X-Forwarded-Host $server_name; # Client host 이름
+proxy_set-header   X-Forwarded-Proto $scheme; # Client와 reserved proxy 접속시 사용한 프로토콜 설정
+ ```
+
+
+### Nginx reverse proxy 02 : 경로로 구분
