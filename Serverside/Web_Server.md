@@ -95,6 +95,7 @@ service nginx restart
 > 내부 DB와 같이 보안이 중요한 서버에 대한 직접 접속을 막을 수 있어 보안에 유익하다.
 > 요청 트래픽 관리를위한 Load Balancing 등에 유익함
 
+
 ### Nginx reverse proxy 01 : Port로 구분
 + nginx reverse proxy 서버에 Port를 2개 open하여, 각 내부서버에서 결과를 가져오도록 구성
     + 내부 서버는 또다른 web server(nginx/apache)로 구성
@@ -130,70 +131,70 @@ service nginx restart
     + nginx.conf 파일
         + upstream, server 설정 추가
         + default.conf 설정과 겹치지 않도록 함
-        ``` conf
-            user nginx;
-        worker_processes  auto;
+    ``` conf
+        user nginx;
+    worker_processes  auto;
 
-        error_log  /var/log/nginx/error.log warn;
-        pid        /var/run/nginx.pid;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
 
-        events { 
-            worker_connections 1024; 
+    events { 
+        worker_connections 1024; 
+    }
+
+    http {
+        # data type에 따라 적절한 동작을 하기 위한 설정 
+        include       /etc/nginx/mime.types;
+        # 기재되어있지 않는 type에 대해서는 표준포맷을 적용
+        default_type  application/octet-stream;
+        # log에 기재되는 값을 지정
+        log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+                        '"$http_user_agent" "$http_x_forwarded_for"';
+        # 접속 기록
+        access_log  /var/log/nginx/access.log  main;
+        # Reponse 시 user 영역의 buffer가 아닌 kernel file buffer를 사용
+        sendfile on;
+        keepalive_timeout 65;
+        #container의 내부 통신을 위해 port 설정
+        upstream docker-nginx {
+            server nginx:80;
+        }
+        #container의 내부 통신을 위해 port 설정
+        upstream docker-apache {
+            server apache:80;
         }
 
-        http {
-            # data type에 따라 적절한 동작을 하기 위한 설정 
-            include       /etc/nginx/mime.types;
-            # 기재되어있지 않는 type에 대해서는 표준포맷을 적용
-            default_type  application/octet-stream;
-            # log에 기재되는 값을 지정
-            log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                            '$status $body_bytes_sent "$http_referer" '
-                            '"$http_user_agent" "$http_x_forwarded_for"';
-            # 접속 기록
-            access_log  /var/log/nginx/access.log  main;
-            # Reponse 시 user 영역의 buffer가 아닌 kernel file buffer를 사용
-            sendfile on;
-            keepalive_timeout 65;
-            #container의 내부 통신을 위해 port 설정
-            upstream docker-nginx {
-                server nginx:80;
-            }
-            #container의 내부 통신을 위해 port 설정
-            upstream docker-apache {
-                server apache:80;
-            }
+        server {
+            # port에 
+            listen 8080;
 
-            server {
-                # port에 
-                listen 8080;
-
-                location / {
-                    #upstream에서 지정한 이름(port)에 포워딩
-                    proxy_pass         http://docker-nginx;
-                    proxy_redirect     off;
-                    proxy_set_header   Host $host;
-                    proxy_set_header   X-Real-IP $remote_addr;
-                    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-                    proxy_set_header   X-Forwarded-Host $server_name;
-                }
-            }
-
-            server {
-                listen 8081;
-
-                location / {
-                    #upstream에서 지정한 이름(port)에 포워딩
-                    proxy_pass         http://docker-apache;
-                    proxy_redirect     off;
-                    proxy_set_header   Host $host;
-                    proxy_set_header   X-Real-IP $remote_addr;
-                    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-                    proxy_set_header   X-Forwarded-Host $server_name;
-                }
+            location / {
+                #upstream에서 지정한 이름(port)에 포워딩
+                proxy_pass         http://docker-nginx;
+                proxy_redirect     off;
+                proxy_set_header   Host $host;
+                proxy_set_header   X-Real-IP $remote_addr;
+                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header   X-Forwarded-Host $server_name;
             }
         }
-        ```
+
+        server {
+            listen 8081;
+
+            location / {
+                #upstream에서 지정한 이름(port)에 포워딩
+                proxy_pass         http://docker-apache;
+                proxy_redirect     off;
+                proxy_set_header   Host $host;
+                proxy_set_header   X-Real-IP $remote_addr;
+                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header   X-Forwarded-Host $server_name;
+            }
+        }
+    }
+    ```
 **참고 사항 : Nginx proxy HTTP 설정 이해**
  + reserved proxy와 내부 서버 사이에 http 통신을 하면, 외부 클라이언트 정보가 누락되어 이상 동작을 할 수 있음
  + proxy header에 정보를 기입하여 이상 동작을 방지 
@@ -208,3 +209,55 @@ proxy_set-header   X-Forwarded-Proto $scheme; # Client와 reserved proxy 접속�
 
 
 ### Nginx reverse proxy 02 : 경로로 구분
+
++ docker-compose.yml ports 경로 제한
+    ``` yaml
+    services:
+        nginxproxy:
+            image: nginx:1.18.0
+            ports:
+                - "80:80"
+            volumes:
+                - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+    ```
++ nginx.conf 파일 설정 변경
+    ``` conf
+    server {
+        listen 80:
+
+        location /blog {
+            nginx 설정
+        }
+        
+        location /community {
+            apache 설정
+        }
+    }
+    ```
++ docker-nginx 설정 변경
+  + nginx Container 접속
+    ``` bash
+    docker exec [nginx Container이름] /bin/bash
+    ```
+  + Container 내부에서 설정파일을 찾아 변경
+    ``` bash
+    cd /usr/share/nginx/html/
+    mkdir blog # 하부 폴더 생성
+    ```
+
++ docker-apache 설정 변경
+  + apche Container에 접속
+    ``` bash
+    docker exec [apahce Container 이름] /bin/bash
+    ```
+  + httpd.conf 에서 root 경로 확인
+    ``` bash
+    cd conf/
+    vim httpd.conf # Server root 파악
+    cd /usr/local/apache2/htdocs
+    ``` 
+  + root에 하부폴더 생성하여 연결
+    ``` bash
+    mkdir community
+    vim test.html
+    ``` 
