@@ -261,3 +261,56 @@ proxy_set-header   X-Forwarded-Proto $scheme; # Client와 reserved proxy 접속�
     mkdir community
     vim test.html
     ``` 
+
+### Nginx reverse proxy 02-1 : 내부 서버 요청 경로 변경
++ 각 내부 서버의 root 경로에서 실행 될수 있도록 경로 변경
+ ``` bash
+ proxy 요청경로 : localhost/내부서버경로/....
+ 내부 경로 : localhost/....
+ ```
++ 경로 변경을 위해, nginx rewrite 설정 변경 필요
++ nginx.conf 파일에서 rewrite option 추가
+``` conf
+server {
+    location /blog/ {
+        rewrite ^/blog(.*)$ $1 break;
+    }
+}
+```
++ rewrite option
+  ``` conf
+  rewrite regex URL [flag]
+  ``` 
+  + regex : 매칭되는 URL 패턴 설정 (정규표현식)
+  + URL : 변경할 URL
+  + flag : 여러 location이 설정되어 있을때, 변경되 URL이 다른 location에 매칭 되었을 경우의 설정
+    +  break : 변경된 URL이 현재의 location 설정만 따르고 종료
+
+  정규 표현식 기호
+  |기호|문법|
+  |---|------|
+  |^ | 문자열 시작 |
+  | . | 임의의 한 문자|
+  | * | 0회 이상을 의미|
+  | $ | 문자열 끝 |
+
+> **참고 link**<br/>
+> nginx.viraptor.info
+
++ 주요 nginx 참고 설정(에러 페이지)
+  + 특정 HTTP 에러에 따라 설정한 별도 에러피이지 출력
+  ```
+  error_page 403 403 405 ..... /error.html;
+  location = /error.html {
+      root /user/share/nginx/html;
+  }
+  ``` 
++ 주요 nginx 참고 설정(cache 페이지)
+  + HTTP response에 ico,css등으로 끝나는 파일은 캐쉬에 보관하라는 command 가능
+  ```
+    location -* \.(ico|css|js|git|jpe?g|png)$ {
+        expoires max;
+
+        
+    }
+  ``` 
