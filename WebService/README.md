@@ -113,3 +113,5 @@ mv * blog
 ```
 
 ### wordpress 설치 주소 접속
+
+탄력적IP주소/blog/wp-adming/install.php
