@@ -123,3 +123,195 @@ docker compose up -d
 docker logs certbot
 ping 사이트주소
 ```
+
+> --dry-run 옵션을 제거하면 실제 인증서를 발급 받을 수 있다.
+
+### 인증서 파일 확인 (실제, 인증서 발급후)
+
+## 4. nginx.conf 재설정
+
+``` conf
+    server {
+        listen 80; # 영구적인 redirection
+        server_name fun-coding.xyz www.fun-coding.xyz;
+
+        location ~ /.well-known/acme-challenge {
+                allow all;
+                root /usr/share/nginx/html;
+                try_files $uri =404;
+        }
+
+        location / {
+                return 301 https://$host$request_uri;
+        }    
+    }
+     server {
+        listen 443 ssl; ## 보안을 위해 443port에서 ssl 프로토콜 처리
+        server_name fun-coding.xyz www.fun-coding.xyz;
+        
+        ssl_certificate /etc/letsencrypt/live/fun-coding.xyz/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/janjan-coding.site/privkey.pem;
+        include /etc/letsencrypt/options-ssl-nginx.conf; # 보안 강화를 위한 옵션 추가
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;   # 보안 강화를 위한 옵션 추가
+
+        location / {
+            proxy_pass         http://docker-web;       # docker-web 컨테이너로 포워딩
+            proxy_redirect     off;                     # 서버 응답 헤더의 주소 변경 (불필요)
+            proxy_set_header   Host $host;
+            proxy_set_header   X-Real-IP $remote_addr;
+            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header   X-Forwarded-Host $server_name;
+	    proxy_set_header   X-Forwarded-Proto $scheme;
+        }
+    }
+```
+
+## 5. 보안 옵션 개선을 위한 파일 다운로드
+> certbot-etc 폴더에 options-ssl-nginx.conf 와 ssl-dhparams.pem을 다운로드한다.
+
+## 6. docker-compose 실행후 접속하여 확인
+``` https://domain 이름```
+
+
+# HTTPS 웹페이지 및 Wordpress 블로그 Service 구현
+### 필요 Server Container
++ Nginx Proxy server (HTTPS Service)
++ 내부 Nginx Server (Web Service)
++ 내부 wordpress Server (Wordpress)
++ 내부 Dataabse Server (Mysql server)
+  + 추가적으로 certbot을 수행하는 Container까지 필요
+
+### 1. 4개의 Server 사용을 위한 설정개선
++ Docker-compose 파일 개선
+``` yaml
+...
+
+  nginxproxy: # Proxyserver Container
+    depends_on:
+      - nginx
+      - db
+      - wordpress
+    image: nginx:alpine
+    container_name: proxyserver 
+    restart: always 
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./certbot-etc:/etc/letsencrypt
+      - ./myweb:/usr/share/nginx/html
+
+  nginx: # Web Service Container
+    image: nginx:latest
+    container_name: mywebserver 
+    restart: always
+    volumes:
+      - ./myweb:/usr/share/nginx/html
+
+  db:
+    image: mysql:5.7 # Mysql Server Container
+    container_name: mysqldb 
+    volumes:
+      - mydb:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  wordpress: # Wordpress Container
+    depends_on:
+      - db
+    build:
+      context: ./wp
+      dockerfile: Dockerfile
+    container_name: wp
+    restart: always
+    volumes:
+      - ./html:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+
+  certbot: # certbot 설정
+    depends_on:
+      - nginxproxy 
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot-etc:/etc/letsencrypt
+      - ./myweb:/usr/share/nginx/html
+    command: certonly --webroot --webroot-path=/usr/share/nginx/html --email jhleeroot@gmail.com --agree-tos --no-eff-email --keep-until-expiring -d fun-coding.xyz -d www.fun-coding.xyz
+
+volumes:
+  mydb:
+```
++ nginx.conf wordpress 추가
+``` conf
+
+...
+
+http {
+
+....
+
+    upstream docker-wordpress {
+        server wordpress:80;
+    }
+server {
+	listen 80;
+	listen [::]:80;
+
+
+ location /blog/ {           
+            proxy_pass         http://docker-wordpress;
+            proxy_redirect     off;
+            proxy_set_header   Host $host;
+            proxy_set_header   X-Real-IP $remote_addr;
+            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header   X-Forwarded-Host $server_name;
+            proxy_set_header   X-Forwarded-Proto $scheme;
+        }
+```
++ wordpress 폴더 생성 후 dockerfile 작성
+
+``` dockerfile
+FROM wordpress:5.7.0
+
+RUN mkdir -p /usr/src/blog
+RUN mkdir -p /usr/src/blog/wp-content/plugins
+RUN mkdir -p /usr/src/blog/wp-content/uploads
+RUN cp -rf /usr/src/wordpress/* /usr/src/blog
+RUN mv /usr/src/blog /usr/src/wordpress/
+RUN chown -R www-data:www-data /usr/src/wordpress
+RUN find /usr/src/wordpress/blog/ -type d -exec chmod 0755 {} \;
+RUN find /usr/src/wordpress/blog/ -type f -exec chmod 644 {} \;
+
+```
+
++ wp Container에 접속하여 설정 수정
+``` bash
+docker exec -it wp /bin/bash
+apt-get update
+apt-get install vim
+vim wp-config.php
+```
+
+``` php
+...
+@package WordPress
+*/
+
+define('FS_METHOD', 'direct');
+```
+``` bash
+cp wp-config.php blog/
+```
+
+### 2. Wordpress 접속후 초기 설정
+> 접속주소<br/>
+> 사용자 주소/blog/wp-admin/install.php
