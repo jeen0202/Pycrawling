@@ -173,7 +173,9 @@ ping 사이트주소
 ``` https://domain 이름```
 
 
-# HTTPS 웹페이지 및 Wordpress 블로그 Service 구현
+
+HTTPS 웹페이지 및 Wordpress 블로그 Service 구현
+------
 ### 필요 Server Container
 + Nginx Proxy server (HTTPS Service)
 + 내부 Nginx Server (Web Service)
@@ -245,7 +247,7 @@ ping 사이트주소
     volumes:
       - ./certbot-etc:/etc/letsencrypt
       - ./myweb:/usr/share/nginx/html
-    command: certonly --webroot --webroot-path=/usr/share/nginx/html --email jhleeroot@gmail.com --agree-tos --no-eff-email --keep-until-expiring -d fun-coding.xyz -d www.fun-coding.xyz
+    command: certonly --webroot --webroot-path=/usr/share/nginx/html --email jhleeroot@gmail.com --agree-tos --no-eff-email --keep-until-expiring -d [사용자 사이트 주소]
 
 volumes:
   mydb:
@@ -315,3 +317,70 @@ cp wp-config.php blog/
 ### 2. Wordpress 접속후 초기 설정
 > 접속주소<br/>
 > 사용자 주소/blog/wp-admin/install.php
+
+인증서 자동갱신을 위한 crontab 사용법
+-----
+
++ certbot은 인증서 확인후 Conatiner 실행 중지
++ cerrbot Container를 주기적으로 실행하여 인증서 재발급 자동화
+
++ 1. docker-compose certbot container 설정 변경
+  + --keep-until-expiring 옵션을 --force-renewal 옵션으로 변경
+  + --dry-run 옵션으로 테스트 후, --force-renewal 적용
+``` yaml
+  certbot :
+    depends_on :
+      - nginxproxy
+    image : certbot/certbot
+    container_name : certbot
+    volumes :
+      - ./certbot-etc:/etc/letsencrypt
+      - ./myweb:/usr/share/nginx/html
+    command : certonly --webroot --webroot-path=/usr/share/nginx/html --email jeen0202@korea.ac.kr --agree-tos --no-eff-email -d janjan-coding.site www.janjan-coding.site --force-renewal
+```
++ 2. crontab 설정
+  + crontab 주요 명령
+``` bash
+crontab -e # crontab 설정 입력 파일
+crontab -l # crontab에 설정 되어있는 내용 확인
+```
+crontab 설정
+```
+*       *       *       *       * 
+분(~59) 시(~23) 일(31)  월(~12) 요일(~7)
+```
++ 예시
+  + 특정 시간 실행
+  ```
+  40 6 * * 1 [실행명령] 
+  # 매주 월요일 6시 40분에 실행
+  ```
+  + 반복 실행
+  ```
+  0,20,40 * * * * [실행명령]
+  # 매일 매시간 0분 20분 40분에 실행
+  ``` 
+  + 범위 실행
+  ```
+  10-40 6 * * * [실행명령]
+  # 매일 오전 6시10분 부터 40분까지 매분 실행
+  ``` 
+  + 간격 실행
+  ```
+  */20 * * * * [실행명령]
+  # 매 20분 마다 실행
+  ``` 
++ crontab 설정 변경
+  + 테스트 코드
+  ``` vim
+  PATH=/usr/local/bin # 경로 설정
+  * * * * * docker-compose -f /home/ubuntu/파일경로/docker-compose.yml restart certbot >> /home/ubuntu/파일경로/cron.log 2>&1
+  # 매분 재실행후 cron.log파일에 결과 저장
+  ```
+  + 설정 변경
+  ```
+  * * 2 * * docker-compose -f /home/ubuntu/파일경로/docker-compose.yml restart certbot >> /home/ubuntu/파일경로/cron.log 2>&1 
+  # 매달 2일마다 재실행
+  ```
+**참고사항**
+> cron.log에 로그가 많이 쌓이면 저장공간 에러가 날 수 있으므로, 주기적으로 삭제 필요
