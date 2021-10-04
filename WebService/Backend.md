@@ -52,3 +52,69 @@ Flask Backend Support
 > nginx proxy(Web server), gunicore(WSGI Middleware)사용하여 요청을 처리하도록 구성<br>
 >기존에는 uwsgi를 많이 사용하였지만, uwsgi가 무겁고, resource 사용량이 많아<br> 
 >이를 고려하여 gunicorn을 사용
+
+# Flask Backend Server와 Gunicorn 설정
+
+## Flask server를 위한 Dockerfile 작성
+``` docker
+FROM python:3.9-alpine
+
+WORKDIR usr/src/flask_app  
+COPY requirements.txt . # 현재폴더에 requirements 파일 복사
+RUN pip install -r requirements.txt # 파일에 작성되어있는 라이브러리 설치
+COPY ./flask_app .
+```
++ requirements.txt
+```
+flask
+gunicorn
+```
+## docker-compose.yml에 Container 추가
+``` yaml
+  flask:
+    build : ./flask_docker
+    restart : always
+    container_name : myflask
+    command : gunicorn -w -2 -b 0.0.0.0:80 wsgi:server
+```
+
+## wsgi 실행을 위한 python 코드
+1. wsgi.py
+  + wsgi 프로그램 실행
+  + 80번 포트 + 별고 고정ip없이 실행
+  ``` python
+  from app import server
+  if __name__ =="__main__":
+    server.run(host="0.0.0.0", port=80)
+  ```
+2. app.py
+  + flask 객체를 server로 작성하고,
+  + /seach 경로 요청시, 메시지 리턴
+  ```python
+  from flask import Flask
+
+  server = Flask(__name__)
+
+  @server.route('/search')
+  def hello_world() :
+    return 'hello Elasticsearch6'
+  ```
+## docker-compose.yml 수정
++ image 빌드를 위해, 경로명 작성
++ gunicorn 실행
+  + wsgi.py에서 server안에 있는 flask 객체 선택
+  + 주 옵션
+    + -b IP_포트 : 바인딩ㅎ할 ip와 포트 설정
+    + -w 숫자 : worker 프로세스 개수 지정
+  ```yaml
+    flask : 
+      build : ./flask_docker
+      restart: always
+      container_name : myflask
+      command: gunicorn -w 2 -b 0.0.0.0:80 wsgi:server
+      # 테스트를 위해 certbot command 수정
+      certbot : 
+      ...
+      ...
+        command : --keep-until-expiring
+  ```
