@@ -118,3 +118,34 @@ gunicorn
       ...
         command : --keep-until-expiring
   ```
+## reverse proxy 설정 변경
++ reverse proxy 기능을 하는 nginx sever
+  + /blog/ => Wordpress Server로 포워딩
+  + /util/ => flask Server로 포워딩
+    + 내부 flask서버에 util 경로 삭제
+  + default => 내부 nginx Server로 포워딩
++ nginx/nginx.conf 수정-1 : upstream 추가
+``` conf
+upstream docker-wordpress {
+  server sordpress:80;
+}
+upstream docker-web{
+  server nginx:80;
+}
+upstream docker-flask {
+  server flask:80;
+}
+```
++ nginx/nginx.conf 수정-2 : location 추가
+```
+location /util/ {
+  rewrite ^/util(.*)$ $1 break;
+  proxy_pass  http://docker-flask;
+  proxy_redirect off;
+  proxy_set_header Host $host;
+  proxy_set_header X-Real_IP $remoed_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Host $server_name;
+  proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
