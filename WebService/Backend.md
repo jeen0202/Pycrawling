@@ -149,3 +149,53 @@ location /util/ {
   proxy_set_header X-Forwarded-Proto $scheme;
 }
 ```
+# PHP-FPM 지원을 위한 proxy 서버 구축
+
+## PHP & PHP FPM
++ PHP-fpm: PHP FastCGI Process Manager의 약자로, CGI의 빠른버전
++ CGI : Common Gateway Interface의 약자, 웹서버와 외부 프로그램 사이에서 정보를 주고받는 방법이나 규약을 의미
++ 프로그래밍을 통해 동적으로 구성되는 페이지 처리를 위해, CGI 규약을 기반으로 프로그래밍하여 동적 페이지 구성
++ PHP : php:Hypertext Preprocessor의 약자로, HTML코드의 프로그래밍을 처리
++ CGI는 Request가 있을때마다, 신류 Process를 생성/구동 하므로, request에 따라 부하가 생길 수 있음
++ FastCGI는 미리 생성된 Process가 대기하고 있다가, 여러 request를 처리마여, CGI보다 처리 속도가 빠름
+  + FastCGI를 구현한 PHP FPM을 구현하기 위해 nginx의 별도 설정이 필요
+
+## docker-compose.yml 수정
++ 내부 nginx server에서 php 처리를 위해, php Container에 해당 request를 전달
++ PHP FPM 공식 image를 사용하되, 확장자가 html인 파일도 처리하도록 설정 변경
+
+1. nginx 설정 변경
+  ``` yaml
+  nginx :
+    ...
+  volumes :
+  - ./php-fpm/default.conf:/etc/nginx/conf.d/default.conf
+  ... 
+
+  php :
+    depends_on :
+      - nginx
+    image : php:fpm
+    container_name : myphp
+    restart : always
+    volumes :
+      - ./php-fpm/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./myweb:/usr/share/nginx/html
+  ```
+2. 내부 nginx server 설정 변경
++ /etc/nginx/conf.d/default.conf 설정 추가
+  ```
+    location ~ \.(html|htm|php)$ {
+      try_files $uri =404;
+      fastcgi_pass php:9000;
+      include fastcgi_params;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+  ```
+3. PHP FPM 설정
++ 기존 PHP FPM 설정은 /usr/local/etc/php-fpm.d/www.conf에 있으며 해당 파일을 추출하여 설정 추가
++ 아래 설정을 하지 않으면, php 확장자 이외의 파일 처리는 보안상 거절됨
+```
+security.limit_extensions = .php .html .htm
+```
